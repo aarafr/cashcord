@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="nl-BE">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nationale Bank Belgie - Tool</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <main class="container">
+      <h2>Nationale Bank België tool</h2>
+      <form class="form" action="#">
+        <section class="input-container">
+          <p>BE</p>
+          <input
+            type="number"
+            name="ondernemingsnummer1"
+            id="ondernemingsnummer1"
+            placeholder="0535880359"
+            required
+          />
+        </section>
+        <input type="submit" value="Vergelijk" />
+        <section class="input-container">
+          <p>BE</p>
+          <input
+            type="number"
+            name="ondernemingsnummer2"
+            id="ondernemingsnummer2"
+            placeholder="0535880359"
+            required
+          />
+        </section>
+      </form>
+      <section class="results">
+        <article class="card">
+          <h3 class="card-name">Ondermening 1 (000000000)</h3>
+          <p class="card-adress">Straat nr<br />postcode stad</p>
+          <section class="card-data">
+            <section class="card-titles">
+              <p>Datum neerlegging</p>
+              <p>Eigen vermogen</p>
+              <p>Schulden</p>
+              <p>Bedrijfswinst</p>
+            </section>
+            <section class="card-numbers">
+              <p>16/09/2020</p>
+              <p>7.582.257</p>
+              <p>7.262.651</p>
+              <p>1.591.349</p>
+            </section>
+          </section>
+        </article>
+        <article class="card">
+          <h3 class="card-name">Ondermening 2 (000000000)</h3>
+          <p class="card-adress">Straat nr<br />postcode stad</p>
+          <section class="card-data">
+            <section class="card-titles">
+              <p>Datum neerlegging</p>
+              <p>Eigen vermogen</p>
+              <p>Schulden</p>
+              <p>Bedrijfswinst</p>
+            </section>
+            <section class="card-numbers">
+              <p>16/09/2020</p>
+              <p>7.582.257</p>
+              <p>7.262.651</p>
+              <p>1.591.349</p>
+            </section>
+          </section>
+        </article>
+      </section>
+      <section class="history"></section>
+    </main>
+  </body>
+</html>
