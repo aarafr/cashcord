@@ -1,38 +1,5 @@
-# node.js
-node_modules/
-npm-debug.log
-
-# Express.js
-node_modules/
-*.env
-
-# TypeScript
-node_modules/
-*.js
-*.map
-*.d.ts
-
-# HTML
-*.html
-*.htm
-*.shtml
-*.xhtml
-
-# CSS
-*.css
-*.scss
-*.sass
-*.less
-*.styl
-
+# TypeScript/ JavaScript
+node_modules
 # C#
-obj/
-bin/
-*.exe
-*.dll
-*.pdb
-*.user
-*.suo
-*.cache
-*.log
-/.vs/
+obj
+bin
