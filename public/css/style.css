@@ -1,0 +1,19 @@
+html,body{
+    height: 100vw;
+    weight: 100vh;
+    overflow-x: hidden;
+}
+
+
+#landing-logo img{
+    height: 250px;
+    width: 250px;
+}
+
+
+.container{
+    display: grid;
+    grid-template-columns: repeat(2 ,1fr);
+    grid-template-rows: auto;
+
+}
