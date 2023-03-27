@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+
 *{
     margin: 0;
     padding: 0;
@@ -5,17 +7,22 @@
 }
 
 html, body{
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Montserrat', sans-serif;
     min-height: 100%;
 }
 body{
     overflow-y: scroll;
 }
-
 .tool-container{
     max-width: 1000px;
     width: 90%;
     margin: 0 auto;
+}
+.tool-container h2{
+    margin: 2rem 0 4rem 0;
+}
+.tool-container p{
+    padding: .2rem 0;
 }
 .tool-container .form{
     display: flex;
@@ -24,9 +31,6 @@ body{
     justify-content: space-between;
     align-items: center;
     margin-bottom: 5rem;
-}
-.tool-container h2{
-    margin: 2rem 0 4rem 0;
 }
 .tool-container .input-container{
     display: flex;

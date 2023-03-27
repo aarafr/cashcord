@@ -1,9 +1,9 @@
 body {
   font-family: 'Montserrat', sans-serif;
-  background-color: #f6f5f7;
+  background-color: lightblue;
   background-image: url("cashcord-logo.png");
-  display: grid;
-  grid-template-areas: 'header header header header header';
+  justify-content: center;
+  display: flex;
 }
 
 header {
@@ -14,14 +14,12 @@ header {
 .container {
   padding: 50px;
   margin: 0;
-  background-color: lightblue;
-  display: flex;
+   display: flexbox;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  max-width: 800px;
-  margin: auto;
+  height: 30%;
+  width: auto;
 }
 
 form {
