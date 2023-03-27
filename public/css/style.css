@@ -2,6 +2,8 @@ html,body{
     height: 100vw;
     weight: 100vh;
     overflow-x: hidden;
+    margin: 0;
+    padding: 0;
 }
 
 
@@ -11,11 +13,11 @@ html,body{
 }
 
 
-.container{
+.Landing-pagina{
     display: grid;
     grid-template-columns: repeat(2 ,1fr);
     grid-template-rows: auto;
-    background-color: aq;
+    background-color: aquamarine
 
 }
 
