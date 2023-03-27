@@ -4,8 +4,9 @@
     box-sizing: border-box;
 }
 
-body{
+html, body{
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100%;
 }
 main.container{
     max-width: 1000px;
@@ -20,9 +21,8 @@ main.container .form{
     align-items: center;
     margin-bottom: 5rem;
 }
-main.container h2{
-    margin: 5rem 0;
-    text-align: center;
+h2{
+    margin: 2rem 0 4rem 0;
 }
 .form .input-container{
     display: flex;
@@ -34,19 +34,19 @@ main.container h2{
     padding: .2rem .5rem;
 }
 .form .input-container p{
-    border-radius: 2rem 0 0 2rem;
+    border-radius: .5rem 0 0 .5rem;
     border-right: none;
     color: #ffffff;
     background-color: #333344;
 }
 .form input[type=number]{
-    border-radius: 0 2rem 2rem 0;
+    border-radius: 0 .5rem .5rem 0;
 }
 .form input[type=number]:focus{
     outline: none;
 }
 .form input[type=submit]{
-    border-radius: 2rem;
+    border-radius: .5rem;
     padding: .5rem 1.5rem;
     background-color: #5525ff;
     color: #ffffff;
@@ -64,21 +64,48 @@ main.container .results{
     justify-content: space-between;
     gap: 1.5rem;
 }
-main.container .results .card{
-    border-radius: 1rem;
+.results .card{
+    border-radius: .5rem;
     padding: 1.5rem;
     box-shadow: 0 0 20px 0px rgb(51 51 68 / 30%);
     flex: 1;
 }
-main.container .results .card-data{
+.card-data{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
-main.container .results .card-adress{
+.card-adress{
     margin: 0 0 2rem 0;
 }
 
+.history-list{
+    list-style: none;
+}
+.list-item{
+    padding: 1rem;
+    border-bottom: 1px solid #333344;
+    transition: all .2s ease-out;
+}
+
+.list-item .content{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.list-item:hover,
+.history-list .active{
+    background-color: #333344;
+    color: white;
+    border-bottom: 1px solid white;
+    cursor: pointer;
+}
+
+.hidden-content{
+    margin-top: 1rem;
+    display: none;
+}
 @media only screen and (max-width: 700px) {
     main.container .form{
         flex-direction: column;
