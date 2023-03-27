@@ -246,3 +246,63 @@ footer a {
     color: #3c97bf;
     text-decoration: none;
 }
+@media only screen and (max-width: 768px) {
+	.container {
+	width: 100%;
+	border-radius: 0;
+	box-shadow: none;
+	}
+	
+	.form-container {
+	width: 100%;
+	}
+	
+	.sign-in-container,
+	.sign-up-container {
+	width: 100%;
+	left: 0;
+	}
+	
+	.overlay-container {
+	width: 100%;
+	left: 0;
+	transform: translateX(0);
+	}
+	
+	.overlay {
+	width: 100%;
+	left: 0;
+	transform: translateX(0);
+	}
+	
+	.overlay-panel {
+	width: 100%;
+	padding: 0 20px;
+	}
+	
+	.overlay-left {
+	transform: translateX(0);
+	}
+	
+	.overlay-right {
+	transform: translateX(0);
+	}
+	
+	.social-container {
+	display: none;
+	}
+
+	  .overlay-right {
+    display: none;
+  }
+
+  .overlay-container {
+    display: none;
+  }
+	
+	footer {
+	display: none;
+	position: relative;
+	height: auto;
+	}
+	}
