@@ -34,14 +34,14 @@ body{
     align-items: stretch;
 }
 .tool-container .input-container > *{
-    border: 1px solid #333344;
+    border: 1px solid #5525ff;
     padding: .2rem .5rem;
 }
 .tool-container .input-container p{
     border-radius: .5rem 0 0 .5rem;
     border-right: none;
     color: #ffffff;
-    background-color: #333344;
+    background-color: #5525ff;
 }
 .tool-container input[type=number]{
     border-radius: 0 .5rem .5rem 0;
