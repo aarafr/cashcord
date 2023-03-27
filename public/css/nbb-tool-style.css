@@ -12,12 +12,12 @@ body{
     overflow-y: scroll;
 }
 
-main.container{
+.tool-container{
     max-width: 1000px;
     width: 90%;
     margin: 0 auto;
 }
-main.container .form{
+.tool-container .form{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -25,31 +25,31 @@ main.container .form{
     align-items: center;
     margin-bottom: 5rem;
 }
-h2{
+.tool-container h2{
     margin: 2rem 0 4rem 0;
 }
-.form .input-container{
+.tool-container .input-container{
     display: flex;
     flex-direction: row;
     align-items: stretch;
 }
-.form .input-container > *{
+.tool-container .input-container > *{
     border: 1px solid #333344;
     padding: .2rem .5rem;
 }
-.form .input-container p{
+.tool-container .input-container p{
     border-radius: .5rem 0 0 .5rem;
     border-right: none;
     color: #ffffff;
     background-color: #333344;
 }
-.form input[type=number]{
+.tool-container input[type=number]{
     border-radius: 0 .5rem .5rem 0;
 }
-.form input[type=number]:focus{
+.tool-container input[type=number]:focus{
     outline: none;
 }
-.form input[type=submit]{
+.tool-container input[type=submit]{
     border-radius: .5rem;
     padding: .5rem 1.5rem;
     background-color: #5525ff;
@@ -57,65 +57,65 @@ h2{
     border: 1px solid #5525ff;
     transition: all .1s ease-in;
 }
-.form input[type=submit]:hover{
+.tool-container input[type=submit]:hover{
     background-color: #ffffff;
     color: #5525ff;
     cursor: pointer;
 }
-main.container .results{
+.tool-container .results{
     display: none;
     flex-wrap: wrap;
     justify-content: space-between;
     gap: 1.5rem;
 }
-.results .card{
+.tool-container .card{
     border-radius: .5rem;
     padding: 1.5rem;
     box-shadow: 0 0 20px 0px rgb(51 51 68 / 30%);
     flex: 1;
 }
-.card-data{
+.tool-container .card-data{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
-.card-adress{
+.tool-container .card-adress{
     margin: 0 0 2rem 0;
 }
 
-.history-list{
+.tool-container .history-list{
     list-style: none;
 }
-.list-item{
+.tool-container .list-item{
     padding: 1rem;
     border-bottom: 1px solid #333344;
     transition: all .2s ease-out;
 }
 
-.list-item .content{
+.tool-container .content{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
 
-.list-item:hover,
-.history-list .active{
+.tool-container .list-item:hover,
+.tool-container .active{
     background-color: #333344;
     color: white;
     border-bottom: 1px solid white;
     cursor: pointer;
 }
 
-.hidden-content{
+.tool-container .hidden-content{
     margin-top: 1rem;
     display: none;
 }
 @media only screen and (max-width: 700px) {
-    main.container .form{
+    .tool-container .form{
         flex-direction: column;
         gap: 1.5rem;
     }
-    .results{
+    .tool-container .results{
         flex-direction: column;
         gap: 1.5rem;
     }
