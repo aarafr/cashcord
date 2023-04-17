@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+@import url('https://fonts.googleapis.com/css2?family=Bree+Serif&family=Oswald:wght@200;400&display=swap');
 
 * {
 	box-sizing: border-box;
@@ -11,7 +11,7 @@ body {
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
-	font-family: 'Montserrat', sans-serif;
+	font-family: 'Oswald', sans-serif;
 	height: 100vh;
 	margin: -20px 0 50px;
 }
