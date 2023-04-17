@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="nl-BE">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,43 +9,54 @@
     <title>Cashcord - Account aanmaken</title>
     <link rel="stylesheet" href="./css/create.css">
 </head>
+
 <body>
     <main>
-        <form>  
-            <header><a href="./log-in.html"></a><img src="./assets/cashcord-logo.png" height="200px" width="500px" alt="" srcset=""></header>
-            <div class="container">  
-            <h1>Cashcord - Registration Form</h1> 
-            <hr>  
-            <label>Voornaam:</label>   
-          <input type="text" name="voornaam" placeholder= "Voornaam" size="15" required />    
-          <label>Achternaam:</label>    
-          <input type="text" name="achternaam" placeholder="Achternaam" size="15"required />   
-          <div>  
-          Gender :  
-          </label><br>  
-          <input type="radio" value="Male" name="gender" checked > Male   
-          <input type="radio" value="Female" name="gender"> Female   
-          <input type="radio" value="Other" name="gender"> Other  
-            
-          </div>  
-          <label>   
-          Phone :  
-          </label>  
-          <input type="text" name="country code" placeholder="Country Code"  value="+32" size="2"/>   
-          <input type="text" name="phone" placeholder="telephone #" size="10" required>   
-          Current Address :  
-          <textarea cols="80" rows="5" placeholder="Current Address" value="address" required>  
-          </textarea>  
-           <label for="email"><b>Email</b></label>  
-           <input type="text" placeholder="E-mail invullen" name="email" required>  
-            
-              <label for="psw"><b>Password</b></label>  
-              <input type="password" placeholder="Wachtwoord invullen" name="psw" required>  
-            
-              <label for="psw-repeat"><b>Re-type Password</b></label>  
-              <input type="password" placeholder="wachtwoord opnieuw typen" name="psw-repeat" required>  
-              <button type="submit" class="registerbtn">Register</button>    
-          </form>  
+        <div class="form-container sign-in-container">
+            <form action="#">
+                <h1>Cashcord - Registration Form</h1>
+                <hr>
+                <label>Voornaam:</label>
+                <input type="text" name="voornaam" placeholder="Voornaam" size="15" required />
+                <label>Achternaam:</label>
+                <input type="text" name="achternaam" placeholder="Achternaam" size="15" required />
+                <div>
+                    Gender :
+                    </label><br>
+                    <input type="radio" value="Male" name="gender" checked> Male
+                    <input type="radio" value="Female" name="gender"> Female
+                    <input type="radio" value="Other" name="gender"> Other
+
+                </div>
+                <label>
+                    Phone :
+                </label>
+                <input type="text" name="country code" placeholder="Country Code" value="+32" size="2" />
+                Current Address :
+                <textarea cols="80" rows="5" placeholder="Current Address" value="address" required>
+          </textarea>
+                <label for="email"><b>Email</b></label>
+                <input type="text" placeholder="E-mail invullen" name="email" required>
+
+                <label for="psw"><b>Password</b></label>
+                <input type="password" placeholder="Wachtwoord invullen" name="psw" required>
+
+                <label for="psw-repeat"><b>Re-type Password</b></label>
+                <input type="password" placeholder="wachtwoord opnieuw typen" name="psw-repeat" required>
+                <button type="submit" class="registerbtn">Register</button>
+            </form>
+        </div>
+        <div class="overlay-container">
+            <div class="overlay">
+                <div class="overlay-panel overlay-right">
+                    <p><img src="./assets/cashcord-logo.png" height="100px" width="auto" alt=""></p>
+                </div>
+            </div>
+        </div>
     </main>
+    <footer>
+        <p>Cashcord G_1PRO_D3</p>
+    </footer>
 </body>
+
 </html>
