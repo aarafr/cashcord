@@ -15,10 +15,12 @@ body {
 	height: 100vh;
 	margin: -20px 0 50px;
 }
+
 h1 {
 	font-weight: bold;
 	margin: 0;
 }
+
 p {
 	font-size: 14px;
 	font-weight: 100;
@@ -80,14 +82,14 @@ input {
 	border: none;
 	padding: 12px 15px;
 	margin: 8px 0;
-	width: 100%;
+	width: 75%;
 }
 
 .container {
 	background-color: #fff;
 	border-radius: 10px;
-  	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 
-			0 10px 10px rgba(0,0,0,0.22);
+	box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25),
+		0 10px 10px rgba(0, 0, 0, 0.22);
 	position: relative;
 	overflow: hidden;
 	width: 768px;
@@ -127,12 +129,15 @@ input {
 }
 
 @keyframes show {
-	0%, 49.99% {
+
+	0%,
+	49.99% {
 		opacity: 0;
 		z-index: 1;
 	}
-	
-	50%, 100% {
+
+	50%,
+	100% {
 		opacity: 1;
 		z-index: 5;
 	}
@@ -149,12 +154,12 @@ input {
 	z-index: 100;
 }
 
-.container.right-panel-active .overlay-container{
+.container.right-panel-active .overlay-container {
 	transform: translateX(-100%);
 }
 
 .overlay {
-	background:white;
+	background: white;
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: 0 0;
@@ -163,12 +168,12 @@ input {
 	left: -100%;
 	height: 100%;
 	width: 200%;
-  	transform: translateX(0);
+	transform: translateX(0);
 	transition: transform 0.6s ease-in-out;
 }
 
 .container.right-panel-active .overlay {
-  	transform: translateX(50%);
+	transform: translateX(50%);
 }
 
 .overlay-panel {
@@ -219,86 +224,87 @@ input {
 }
 
 footer {
-    background-color: #222;
-    color: #fff;
-    font-size: 14px;
-    bottom: 0;
-    position: fixed;
-    left: 0;
-    right: 0;
-    text-align: center;
-    z-index: 999;
+	background-color: #222;
+	color: #fff;
+	font-size: 14px;
+	bottom: 0;
+	position: fixed;
+	left: 0;
+	right: 0;
+	text-align: center;
+	z-index: 999;
 }
 
 footer p {
-    margin: 10px 0;
+	margin: 10px 0;
 }
 
 footer i {
-    color: red;
+	color: red;
 }
 
 footer a {
-    color: #3c97bf;
-    text-decoration: none;
+	color: #3c97bf;
+	text-decoration: none;
 }
+
 @media only screen and (max-width: 768px) {
 	.container {
-	width: 100%;
-	border-radius: 0;
-	box-shadow: none;
+		width: 100%;
+		border-radius: 0;
+		box-shadow: none;
 	}
-	
+
 	.form-container {
-	width: 100%;
+		width: 100%;
 	}
-	
+
 	.sign-in-container,
 	.sign-up-container {
-	width: 100%;
-	left: 0;
+		width: 100%;
+		left: 0;
 	}
-	
+
 	.overlay-container {
-	width: 100%;
-	left: 0;
-	transform: translateX(0);
+		width: 100%;
+		left: 0;
+		transform: translateX(0);
 	}
-	
+
 	.overlay {
-	width: 100%;
-	left: 0;
-	transform: translateX(0);
+		width: 100%;
+		left: 0;
+		transform: translateX(0);
 	}
-	
+
 	.overlay-panel {
-	width: 100%;
-	padding: 0 20px;
+		width: 100%;
+		padding: 0 20px;
 	}
-	
+
 	.overlay-left {
-	transform: translateX(0);
+		transform: translateX(0);
 	}
-	
+
 	.overlay-right {
-	transform: translateX(0);
+		transform: translateX(0);
 	}
-	
+
 	.social-container {
-	display: none;
+		display: none;
 	}
 
-	  .overlay-right {
-    display: none;
-  }
+	.overlay-right {
+		display: none;
+	}
 
-  .overlay-container {
-    display: none;
-  }
-	
+	.overlay-container {
+		display: none;
+	}
+
 	footer {
-	display: none;
-	position: relative;
-	height: auto;
+		display: none;
+		position: relative;
+		height: auto;
 	}
-	}
+}
