@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Bree+Serif&family=Oswald:wght@200;400&display=swap');
+
+*{
+    font-family: 'Oswald', sans-serif;
+}
+header a{
+    font-size: 20px;
+}
+a{
+    font-size: normal;
+}
+h1{
+    font-size: 70px;
+    background-clip: text;
+    -webkit-background-clip: text;
+    background-image: linear-gradient(to right, var(--color-3), var(--color-2));
+    color: transparent;
+}
+h2{
+    font-size: 40px;
+}
+p{
+    font-size: 18px;
+}
+.small{
+    color: #0000008e;
+    font-size: 15px;
+}
+#home section:nth-child(1) p{
+    color: #000;
+    font-size: 15px;
+}
