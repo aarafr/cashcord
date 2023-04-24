@@ -1,51 +1,50 @@
 <!DOCTYPE html>
 <html lang="nl-BE">
-
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="./assets/logo-tab.png" />
     <title>Cashcord - Account aanmaken</title>
     <link rel="stylesheet" href="./css/account.css">
-</head>
-
-<body>
+  </head>
+  <body>
     <main>
-        <section class="form-container sign-in-container">
-            <form action="#">
-                <h1>Cashcord - Registration Form</h1><br>
+      <section class="form-container sign-in-container">
+        <form action="#">
+          <h1>Cashcord - Registration Form</h1><br>
 
-                <label for="first-name"><b>Voornaam</b></label>
-                <input type="text" name="first-name" placeholder="Voornaam" size="15" required />
-                <label for="last-name"><b>Achternaam</b></label>
-                <input type="text" name="last-name" placeholder="Achternaam" size="15" required />
-                
-                <label for="phone"><b>Telefoonnummer</b></label>
-                <input type="text" name="phone" placeholder="Country Code" value="+32" size="2" />
-                <label for="email"><b>Email</b></label>
-                <input type="text" placeholder="E-mail invullen" name="email" required>
-
-                <label for="psw"><b>Wachtwoord</b></label>
-                <input type="password" placeholder="Wachtwoord invullen" name="psw" required>
-
-                <label for="psw-repeat"><b>Wachtwoord opnieuw typen</b></label>
-                <input type="password" placeholder="Wachtwoord opnieuw typen" name="psw-repeat" required>
-                <button type="submit" class="registerbtn">Register</button>
-
-            </form>
-        </section>
-        <section class="overlay-container">
-            <div class="overlay">
-                <div class="overlay-panel overlay-right">
-                    <p><img src="./assets/cashcord-logo.png" height="200px" width="auto" alt=""></p>
-                </div>
-            </div>
-        </section>
+          <label for="first-name"><b>Voornaam</b></label>
+          <input type="text" id="first-name" name="first-name" placeholder="Voornaam" size="15" required />
+          
+          <label for="last-name"><b>Achternaam</b></label>
+          <input type="text" id="last-name" name="last-name" placeholder="Achternaam" size="15" required />
+          
+          <label for="phone"><b>Telefoonnummer</b></label>
+          <input type="tel" id="phone" name="phone" placeholder="Country Code" value="+32" size="2" />
+          
+          <label for="email"><b>Email</b></label>
+          <input type="email" id="email" name="email" placeholder="E-mail invullen" required>
+          
+          <label for="psw"><b>Wachtwoord</b></label>
+          <input type="password" id="psw" name="psw" placeholder="Wachtwoord invullen" required>
+          
+          <label for="psw-repeat"><b>Wachtwoord opnieuw typen</b></label>
+          <input type="password" id="psw-repeat" name="psw-repeat" placeholder="Wachtwoord opnieuw typen" required>
+          
+          <button type="submit" class="registerbtn">Register</button>
+        </form>
+      </section>
+      <section class="overlay-container">
+        <div class="overlay">
+          <div class="overlay-panel overlay-right">
+            <p><img src="./assets/cashcord-logo.png" height="200" width="auto" alt=""></p>
+          </div>
+        </div>
+      </section>
     </main>
     <footer>
-        <p>Cashcord G_1PRO_D3</p>
+      <p>Cashcord G_1PRO_D3</p>
     </footer>
-</body>
-
+  </body>
 </html>
