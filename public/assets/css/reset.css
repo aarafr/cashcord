@@ -1,0 +1,19 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body, html{
+    height: auto;
+    width: 100%;
+}
+header * {
+    user-select: none;
+  }
+nav li{
+    text-decoration: none;
+    list-style: none;
+}
+a{
+    text-decoration: none;
+}

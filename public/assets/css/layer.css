@@ -1,0 +1,21 @@
+header::before, header img, header span, header a{
+    z-index: 3;
+}
+header nav, header ul{
+    z-index: 2;
+}
+
+
+main{
+    z-index: 0;
+}
+#home section:first-child img{
+    z-index: -1;
+}
+
+#home section:nth-child(2) button{
+    z-index: 2;
+}
+#home section:nth-child(2) button::before{
+    z-index: 3;
+}
