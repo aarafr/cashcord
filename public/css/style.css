@@ -1,0 +1,27 @@
+html,body{
+    height: 100vw;
+    weight: 100vh;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+
+#landing-logo img{
+    height: 250px;
+    width: 250px;
+}
+
+
+.Landing-pagina{
+    display: grid;
+    grid-template-columns: repeat(2 ,1fr);
+    grid-template-rows: auto;
+    background-color: aquamarine
+
+}
+
+#logo-icon{
+    height: 16px;
+    width: 16px;
+}
