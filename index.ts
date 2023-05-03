@@ -31,10 +31,31 @@ const connect = async () => {
 
 const app = express();
 app.set("port", 3000);
+app.set("view engine", "ejs");
 
 app.use(express.static(path.join(__dirname, "public")));
 app.get("/", (req: any, res: any) => {
   res.sendFile(path.join(__dirname, "index.html"));
+});
+
+app.get("/login", async (req: any, res: any) => {
+  res.render("login");
+});
+
+app.get("/registreer", async (req: any, res: any) => {
+  res.render("registar");
+});
+
+app.get("/wachtwoord-vergeten", async (req: any, res: any) => {
+  res.render("forgot-password");
+});
+
+app.get("/projecten", async (req: any, res: any) => {
+  res.render("projects");
+});
+
+app.get("/vergelijken", async (req: any, res: any) => {
+  res.render("compare");
 });
 
 app.listen(app.get("port"), async () => {
