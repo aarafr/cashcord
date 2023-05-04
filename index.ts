@@ -43,7 +43,7 @@ app.get("/login", async (req: any, res: any) => {
 });
 
 app.get("/registreer", async (req: any, res: any) => {
-  res.render("registar");
+  res.render("register");
 });
 
 app.get("/wachtwoord-vergeten", async (req: any, res: any) => {
