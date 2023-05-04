@@ -1,8 +1,8 @@
-const form = document.querySelector(".form");
+const toolForm = document.querySelector(".tool-form");
 const results = document.querySelector(".results");
 const historyList = document.querySelectorAll(".list-item");
 
-form.addEventListener("submit", (event) => {
+toolForm.addEventListener("submit", (event) => {
   event.preventDefault();
   results.style.display = "flex";
 });
