@@ -1,1 +1,27 @@
-<%- include('header') %> <%- include('footer') %>
+<%- include('header') %>
+
+<main id="account">
+  <section class="form-container sign-in-container">
+    <form action="#">
+      <h1>Sign in om verder te gaan</h1>
+      <label for="email">E-mail</label>
+      <input type="email" id="email" name="email" required />
+      <label for="password">Passwoord</label>
+      <input type="password" id="password" name="password" required />
+      <a href="forgot-passwoord-pagina.html">Wachtwoord vergeten?</a>
+      <button class="button 1" type="submit">Sign In</button>
+      <button class="button 1"><a href="/registreer">Account aanmaken</a></button>
+    </form>
+  </section>
+  <section class="overlay-container">
+    <section class="overlay">
+      <section class="overlay-panel overlay-right">
+        <p>
+          <img src="./assets/cashcord-logo.png" height="200px" width="auto" alt="Cashcord logo" />
+        </p>
+      </section>
+    </section>
+  </section>
+</main>
+
+<%- include('footer') %>
