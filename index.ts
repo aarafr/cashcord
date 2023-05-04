@@ -33,9 +33,10 @@ const app = express();
 app.set("port", 3000);
 app.set("view engine", "ejs");
 
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static("public"));
+
 app.get("/", (req: any, res: any) => {
-  res.sendFile(path.join(__dirname, "index.html"));
+  res.render("home");
 });
 
 app.get("/login", async (req: any, res: any) => {
