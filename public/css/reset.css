@@ -2,10 +2,13 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    outline: none;
+    border: none;
 }
 body, html{
-    height: auto;
+    height: 100%;
     width: 100%;
+    overflow-x: hidden;
 }
 header * {
     user-select: none;
@@ -16,4 +19,10 @@ nav li{
 }
 a{
     text-decoration: none;
+}
+
+input[type=number]::-webkit-inner-spin-button, /* hide arrows higher/lower*/
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
