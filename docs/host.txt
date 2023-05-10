@@ -1,2 +1,0 @@
-command: ts-node index
-link: http://localhost:3000 (home pagina)

@@ -13,6 +13,7 @@
     header img{
         position: relative;
         background-color: #000;
+        height: 65px;
     }
     header::before{
         content: "";
@@ -26,6 +27,7 @@
     header #hamburger-icon{
         display: block;
         color: #fff;
+        right: 10px;
     }
     header nav{
         height: 180px;
@@ -150,7 +152,7 @@
     #home section:nth-child(2) article{
         border: none;
     }
-    #home section:nth-child(2){
+    #home section:nth-child(2) article:first-child{
         margin-top: 100px;
     }
 }

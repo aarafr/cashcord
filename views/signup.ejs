@@ -1,0 +1,30 @@
+<%- include('header'); %>
+<main class="login">
+    <form  method="POST" action="/signup">
+        <fieldset>
+            <div>
+                <input name="firstname" type="text" required>
+                <label>First name</label>
+            </div>
+            <div>
+                <input name="lastname" type="text" required>
+                <label>Last name</label>
+            </div>
+            <div>
+                <input name="email" type="text" required>
+                <label>Mail adress</label>
+            </div>
+            <div>
+                <input name="password" type="text" required>
+                <label>Password</label>
+            </div>
+            <div>
+                <input name="passwordRepeat" type="text" required>
+                <label>Confirm password</label>
+            </div>
+            <input type="submit" value="sign up">
+            <a class="change" href="http://localhost:3000/login">I have a account</a>
+        </fieldset>
+    </form>
+</main>
+<%- include('footer'); %>

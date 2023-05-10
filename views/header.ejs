@@ -1,34 +1,29 @@
 <!DOCTYPE html>
-<html lang="nl-BE">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/x-icon" href="./images/favicon.ico" />
-    <link href="./css/reset.css" rel="stylesheet" />
-    <link href="./css/style.css" rel="stylesheet" />
-    <link href="./css/font.css" rel="stylesheet" />
-    <link href="./css/mobile.css" rel="stylesheet" />
-    <link href="./css/animation.css" rel="stylesheet" />
-    <link href="./css/layer.css" rel="stylesheet" />
-    <link href="./css/root.css" rel="stylesheet" />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
-    />
-    <title>Cashcord</title>
-  </head>
-  <body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="./assets/favicon.png">
+    <link href="./css/reset.css" rel="stylesheet">
+    <link href="./css/style.css" rel="stylesheet">
+    <link href="./css/font.css" rel="stylesheet">
+    <link href="./css/mobile.css" rel="stylesheet">
+    <link href="./css/animation.css" rel="stylesheet">
+    <link href="./css/layer.css" rel="stylesheet">
+    <link href="./css/root.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <title>home</title>
+</head>
+<body>
     <header>
-      <span id="hamburger-icon" class="material-symbols-outlined">menu</span>
-      <a href="/"><img src="./images/cc-logo-md.png" alt="logo" /></a>
-      <nav>
-        <ul>
-          <li class="active"><a href="http://localhost:3000/">home</a></li>
-          <li><a href="http://localhost:3000/compare">compare</a></li>
-          <li><button onclick="window.location.href='/login'">login</button></li>
-        </ul>
-      </nav>
+        <span id="hamburger-icon" class="material-symbols-outlined">menu</span>
+        <a href="/"><img src="./assets/cashcord-logo-removebg-preview.png" alt="logo"></a>
+        <nav>
+            <ul>
+                <li class="<%= (path === '/') ? 'active' : '' %>"><a href="/">home</a></li>
+                <li class="<%= (path === '/compare') ? 'active' : '' %>"><a href="http://localhost:3000/compare">compare</a></li>
+                <li><a href="/login"><button>login</button></a></li>
+            </ul>
+        </nav>
     </header>
-  </body>
-</html>

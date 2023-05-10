@@ -1,119 +1,136 @@
 import path from "path";
-import { MongoClient, ObjectId } from "mongodb";
-import dotenv from "dotenv";
+import express from 'express';
+import { MongoClient } from "mongodb";
+const bodyParser = require('body-parser'); // npm install body-parser
+// const { body, validationResult } = require('express-validator'); // npm install express-validator
 
-dotenv.config();
 
 interface User {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
+  name: string,
+  email: string,
+  password: string
 }
 
-const bcrypt = require("bcrypt");
-const express = require("express");
-const ejs = require("EJS");
+let userArray : User[] = [];
 
-const saltRounds = 10;
 
-const client = new MongoClient(process.env.MONGODB_URI!);
+let MongoPassword = encodeURIComponent("hhfrp132545ppokhh1");
+const url = `mongodb+srv://Sidge:${MongoPassword}@cashcord.m5mpiy9.mongodb.net/?retryWrites=true&w=majority`;
+const client = new MongoClient(url);
 
-const exit = async () => {
-  try {
-    await client.close();
-    console.log("Disconnected from database");
-  } catch (error) {
-    console.error(error);
-  }
-  process.exit(0);
-};
 
-const connect = async () => {
-  try {
-    await client.connect();
-    console.log("Connected to database");
-    process.on("SIGINT", exit);
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-const db = client.db("cashcoard");
 const app = express();
 
-app.set("port", 3000);
-app.set("view engine", "ejs");
+app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(express.static("public"));
-app.use(express.json({ limit: "1mb" }));
+
+// let api = "https://ws.uat2.cbso.nbb.be/authentic/legalEntity/0453488757";
+// fetch(api)
+//   .then(response => {
+//     if(!response.ok){
+//       throw new Error("Network issue");
+//     }
+//     return response.json;
+//   })
+
+
+app.set("port", 3000);
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
+app.use(express.static('public'));
+app.use('/', express.static(path.join(__dirname, 'public')));
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/", (req: any, res: any) => {
-  res.render("home");
+
+app.get("/", (req, res) => {
+  res.type('text/html'); 
+  res.render('index', {path: req.path});
 });
 
-app.get("/login", async (req: any, res: any) => {
-  res.render("login");
+app.get("/login", (req, res) => {
+  res.type('text/html'); 
+  res.render('login', {path: req.path});
+})
+
+
+app.post('/signup', (req, res) => {
+  console.log(req.body);
+  const name = req.body.firstname + " " + req.body.lastname;
+  const email = req.body.email.replace(/\s+/g, '');
+  const password = req.body.password;
+  const passwordRepeat = req.body.passwordRepeat;
+
+  const nameMatch = /^[a-zA-Z]+$/;
+  const mailMatch = /^[a-zA-Z]+@[a-zA-Z]+\.[a-zA-Z]{2,3}$/;
+  const passMatch = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/;
+
+  if(!name.match(nameMatch)){
+    res.status(400);
+    return;
+  }
+  if(!email.match(mailMatch)){
+    res.status(400);
+    return;
+  }
+  if(password !== passwordRepeat){
+    res.status(400);
+    return;
+  }
+  if(!password.match(passMatch)){
+    res.status(400);
+    return;
+  }
+  res.status(200);
+  res.redirect('/');
+  const userObj : User = {
+    name: name,
+    email: email,
+    password: password
+  }
+  console.log(userObj);
+  data(userObj);
 });
 
-app.post("/login", async (req: any, res: any) => {
-  const email = req.body.email;
-  const password = req.body.psw;
+app.get("/signup", (req, res) => {
+  res.type('text/html'); 
+  res.render('signup', {path: req.path});
+})
 
-  const hash = await db.collection("users").findOne({ email: email });
 
-  if (hash !== null) {
-    bcrypt.compare(password, hash.password, function (err: any, result: any) {
-      if (result) {
-        res.redirect("/vergelijken");
-      } else {
-        res.redirect("?status=wrongPassword");
+app.get("/compare", (req, res) => {
+  res.type('text/html'); 
+  res.render('compare', {path: req.path});
+});
+
+
+const data = async(userObj : User) => {
+  try{
+      await client.connect();
+      console.log("connected to the database");
+      
+      userArray.push(userObj);
+
+      let users : User[] = await client.db("cashcord").collection("users").find<User>({}).toArray();
+      if(users.length == 0){
+        await client.db("cashcord").collection("users").insertMany(userArray);
       }
-    });
-  } else {
-    res.redirect("?status=emailNotFound");
   }
-});
-
-app.get("/registreer", async (req: any, res: any) => {
-  res.render("register");
-});
-
-app.post("/registreer", async (req: any, res: any) => {
-  const firstName: string = req.body.firstName;
-  const lastName: string = req.body.lastName;
-  const password: string = req.body.psw;
-  const email: string = req.body.email;
-
-  if ((await db.collection("users").findOne({ email: email })) === null) {
-    bcrypt.hash(password, saltRounds, async (err: any, hash: string) => {
-      await db.collection("users").insertOne({
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        password: hash,
-      });
-    });
-    res.redirect("?status=succeed");
-  } else {
-    res.redirect("?status=userExists");
+  catch (e) {
+      console.error(e);
   }
+  finally{
+      await client.close();
+  }
+}
+
+
+
+app.use(function(req, res, next) {
+  res.status(404).render('404');
 });
 
-app.get("/wachtwoord-vergeten", async (req: any, res: any) => {
-  res.render("forgot-password");
-});
-
-app.get("/projecten", async (req: any, res: any) => {
-  res.render("projects");
-});
-
-app.get("/vergelijken", async (req: any, res: any) => {
-  res.render("compare");
-});
-
-app.listen(app.get("port"), async () => {
-  await connect();
-  console.log("[server] http://localhost:" + app.get("port"));
-});
+app.listen(app.get("port"), () =>
+  console.log("[server] http://localhost:" + app.get("port"))
+);
