@@ -13,7 +13,7 @@ interface User {
 let userArray: User[] = [];
 
 let MongoPassword = encodeURIComponent("hhfrp132545ppokhh1");
-const url = `mongodb+srv://nodejs_user:NAgARzje8W6aosBL@cluster0.tzj4rtf.mongodb.net/?retryWrites=true&w=majority`;
+const url = `mongodb+srv://Sidge:${MongoPassword}@cashcord.m5mpiy9.mongodb.net/?retryWrites=true&w=majority`;
 const client = new MongoClient(url);
 
 const app = express();
