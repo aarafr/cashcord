@@ -100,7 +100,7 @@ app.post("/signup", (req, res) => {
     });
   }
   res.status(200);
-  res.redirect("/");
+  res.redirect("/projecten");
   bcrypt.hash(password, saltRounds, async (err: any, hash: string) => {
     const userObj: User = {
       name: name,
@@ -115,6 +115,10 @@ app.post("/signup", (req, res) => {
 app.get("/signup", (req, res) => {
   res.type("text/html");
   res.render("signup", { path: req.path });
+});
+
+app.get("/projecten", (req, res) => {
+  res.render("projecten");
 });
 
 app.get("/compare", (req, res) => {
@@ -140,7 +144,7 @@ const data = async (userObj: User) => {
   }
 };
 
-app.use(function (req, res, next) {
+app.use((req, res, next) => {
   res.status(404).render("404");
 });
 

@@ -11,23 +11,38 @@
         <label>First name</label>
       </div>
       <div>
-        <input name="lastname" type="text" required />
+        <input name="lastname" type="text" pattern="^[a-zA-Z ]+$" required />
         <label>Last name</label>
       </div>
       <div>
-        <input name="email" type="email" required />
+        <input
+          name="email"
+          type="email"
+          pattern="^[a-zA-Z0-9.]+@[a-zA-Z]+\.[a-zA-Z]{2,3}$"
+          required
+        />
         <label>Mail adress</label>
       </div>
       <div>
-        <input name="password" type="password" required />
+        <input
+          name="password"
+          type="password"
+          pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$"
+          required
+        />
         <label>Password</label>
       </div>
       <div>
-        <input name="passwordRepeat" type="password" required />
+        <input
+          name="passwordRepeat"
+          type="password"
+          pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$"
+          required
+        />
         <label>Confirm password</label>
       </div>
       <input type="submit" value="sign up" />
-      <a class="change" href="http://localhost:3000/login">I have a account</a>
+      <a class="change" href="./login">I have a account</a>
     </fieldset>
   </form>
 </main>
