@@ -4,7 +4,7 @@
     <h2>Account aanmaken</h2>
     <fieldset>
       <% if (locals.loginError) { %>
-      <p><%= loginError.message %></p>
+      <p class="error"><%= loginError.message %></p>
       <% } %>
       <div>
         <input name="firstname" type="text" pattern="^[a-zA-Z]+$" required />

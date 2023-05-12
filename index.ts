@@ -17,6 +17,8 @@ const url = `mongodb+srv://Sidge:${MongoPassword}@cashcord.m5mpiy9.mongodb.net/?
 const client = new MongoClient(url);
 
 const app = express();
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -46,6 +48,11 @@ app.get("/", (req, res) => {
 app.get("/login", (req, res) => {
   res.type("text/html");
   res.render("login", { path: req.path });
+});
+
+app.post("/login", (req, res) => {
+  const email = req.body.email.replace(/\s+/g, "");
+  const password = req.body.password;
 });
 
 app.post("/signup", (req, res) => {
@@ -94,13 +101,15 @@ app.post("/signup", (req, res) => {
   }
   res.status(200);
   res.redirect("/");
-  const userObj: User = {
-    name: name,
-    email: email,
-    password: password,
-  };
-  console.log(userObj);
-  data(userObj);
+  bcrypt.hash(password, saltRounds, async (err: any, hash: string) => {
+    const userObj: User = {
+      name: name,
+      email: email,
+      password: hash,
+    };
+    console.log(userObj);
+    data(userObj);
+  });
 });
 
 app.get("/signup", (req, res) => {

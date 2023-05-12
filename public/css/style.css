@@ -305,6 +305,13 @@ main{
     height: 100%;
     gap: 30px;
 }
+
+.login form .error{
+    background-color: #ff0f0f;
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+}
+
 .login  form .change{
     position: absolute;
     bottom: 0;
