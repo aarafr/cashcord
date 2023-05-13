@@ -3,6 +3,9 @@
   <form>
     <h2>Inloggen</h2>
     <fieldset>
+      <% if (locals.loginError) { %>
+      <p class="error"><%= loginError.message %></p>
+      <% } %>
       <div>
         <input
           type="email"

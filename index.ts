@@ -2,6 +2,7 @@ import path from "path";
 import express from "express";
 import { MongoClient } from "mongodb";
 const bodyParser = require("body-parser"); // npm install body-parser
+const session = require("express-session");
 // const { body, validationResult } = require('express-validator'); // npm install express-validator
 
 interface User {
@@ -13,7 +14,7 @@ interface User {
 let userArray: User[] = [];
 
 let MongoPassword = encodeURIComponent("hhfrp132545ppokhh1");
-const url = `mongodb+srv://Sidge:${MongoPassword}@cashcord.m5mpiy9.mongodb.net/?retryWrites=true&w=majority`;
+const url = `mongodb+srv://nodejs_user:NAgARzje8W6aosBL@cluster0.tzj4rtf.mongodb.net/?retryWrites=true&w=majority`;
 const client = new MongoClient(url);
 
 const app = express();
@@ -39,6 +40,14 @@ app.use(express.static("public"));
 app.use("/", express.static(path.join(__dirname, "public")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(
+  session({
+    secret: "XtjnbAymL5hoan1nw8dWqbKzhQu3GvAlvdNAo0XPh8EHetasKN",
+    resave: false,
+    saveUninitialized: true,
+    cookie: { maxAge: 86400 },
+  })
+);
 
 app.get("/", (req, res) => {
   res.type("text/html");
@@ -46,6 +55,10 @@ app.get("/", (req, res) => {
 });
 
 app.get("/login", (req, res) => {
+  if (session.loggedIn) {
+    res.status(200);
+    res.redirect("/projecten");
+  }
   res.type("text/html");
   res.render("login", { path: req.path });
 });
@@ -99,26 +112,49 @@ app.post("/signup", (req, res) => {
       },
     });
   }
-  res.status(200);
-  res.redirect("/projecten");
   bcrypt.hash(password, saltRounds, async (err: any, hash: string) => {
     const userObj: User = {
       name: name,
       email: email,
       password: hash,
     };
-    console.log(userObj);
     data(userObj);
+    console.log(userObj);
+    session.loggedIn = true;
+    session.user = userObj;
+    res.status(200);
+    res.redirect("/projecten");
   });
 });
 
 app.get("/signup", (req, res) => {
+  if (session.loggedIn) {
+    res.status(200);
+    res.redirect("/projecten");
+  }
   res.type("text/html");
   res.render("signup", { path: req.path });
 });
 
+app.get("/logout", (req, res) => {
+  if (session.loggedIn) {
+    res.status(200);
+    res.redirect("/?status=loggedOut");
+  } else {
+    res.redirect("/");
+  }
+});
+
 app.get("/projecten", (req, res) => {
-  res.render("projecten");
+  if (session.loggedIn) {
+    res.render("landing", {
+      path: req.path,
+      user: session.user,
+    });
+  } else {
+    res.status(200);
+    res.redirect("/login?status=notLoggedIn");
+  }
 });
 
 app.get("/compare", (req, res) => {

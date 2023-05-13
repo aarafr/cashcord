@@ -1,1 +1,5 @@
-<%- include('header') %> <%- include('footer') %>
+<%- include('header', {loggedIn: true}) %>
+<h1><%= user.name %></h1>
+<h2><%= user.email %></h2>
+
+<%- include('footer') %>

@@ -25,11 +25,15 @@
       <nav>
         <ul>
           <li class="<%= (path === '/') ? 'active' : '' %>"><a href="/">home</a></li>
-          <li class="<%= (path === '/compare') ? 'active' : '' %>">
-            <a href="./compare">compare</a>
+          <li class="<%= (path === '/projecten') ? 'active' : '' %>">
+            <a href="./projecten">projecten</a>
           </li>
           <li>
+            <% if (locals.loggedIn) { %>
+            <a href="./logout"><button>logout</button></a>
+            <% } else { %>
             <a href="./login"><button>login</button></a>
+            <% } %>
           </li>
         </ul>
       </nav>
