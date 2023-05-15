@@ -382,8 +382,7 @@ main{
 .login  div input:focus ~ label,
 .login  div input:valid ~ label,
 .login div input:active ~ label,
-.login div input:valid:focus ~ label,
-.login div input:valid:not(:placeholder-shown) ~ label {
+.login div input:valid:focus ~ label {
     font-size: 10px;
     top: -10px;
     color: #000;
@@ -391,8 +390,7 @@ main{
 .login  div input:focus,
 .login  div input:valid,
 .login div input:active ~ label,
-.login div input:valid:focus ~ label,
-.login div input:valid:not(:placeholder-shown) ~ label{
+.login div input:valid:focus ~ label{
     border-color: #000;
 }
 

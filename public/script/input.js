@@ -2,8 +2,8 @@ const inputFields = document.querySelectorAll('.login input');
 
 inputFields.forEach((input) => {
   input.addEventListener('input', () => {
-    const label = document.querySelector('.login label');
-    if (input.validity.valid && input.value !== '') {
+    const label = document.querySelectorAll('.login label');
+    if (input.value !== '') {
       label.classList.add('input-active');
       label.classList.remove('input-invalid');
     } else {

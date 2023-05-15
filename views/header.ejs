@@ -21,12 +21,12 @@
   <body>
     <header>
       <span id="hamburger-icon" class="material-symbols-outlined">menu</span>
-      <a href="/"><img src="./assets/cashcord.png" alt="logo" /></a>
+      <a href="/home"><img src="./assets/cashcord.png" alt="logo" /></a>
       <nav>
         <ul>
-          <li class="<%= (path === '/') ? 'active' : '' %>"><a href="/">home</a></li>
-          <li class="<%= (path === '/projecten') ? 'active' : '' %>">
-            <a href="./projecten">projecten</a>
+          <li class="<%= (path === '/home') ? 'active' : '' %>"><a href="/home">home</a></li>
+          <li class="<%= (path === '/compare') ? 'active' : '' %>">
+            <a href="./projecten">tool</a>
           </li>
           <li>
             <% if (locals.loggedIn) { %>
