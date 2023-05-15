@@ -24,6 +24,9 @@
       <nav>
         <ul>
           <li>
+            <li class="<%= (path === '/') ? 'active' : '' %>">
+            <a href="/">projecten</a>
+          </li>
             <% if (locals.loggedIn) { %>
             <a href="../logout"><button>logout (<%= user.name %>)</button></a>
             <% } else { %>

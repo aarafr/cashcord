@@ -3,6 +3,7 @@ import express from "express";
 import { MongoClient, ObjectId } from "mongodb";
 const bodyParser = require("body-parser"); // npm install body-parser
 import session from "express-session";
+import nocache from "nocache";
 
 // const { body, validationResult } = require('express-validator'); // npm install express-validator
 
@@ -74,6 +75,7 @@ app.use(
     cookie: { maxAge: 86400 },
   })
 );
+app.use(nocache());
 
 app.get("/", (req, res) => {
   if (req.session.loggedIn) {
