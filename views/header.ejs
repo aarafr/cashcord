@@ -28,9 +28,9 @@
             <a href="/">projecten</a>
           </li>
             <% if (locals.loggedIn) { %>
-            <a href="../logout"><button>logout (<%= user.name %>)</button></a>
+            <a href="../afmelden"><button>afmelden (<%= user.name %>)</button></a>
             <% } else { %>
-            <a href="../login"><button>login</button></a>
+            <a href="../aanmelden"><button>aanmelden</button></a>
             <% } %>
           </li>
         </ul>

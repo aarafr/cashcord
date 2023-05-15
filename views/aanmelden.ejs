@@ -1,6 +1,6 @@
 <%- include('header'); %>
 <main class="login">
-  <form method="POST" action="/login">
+  <form method="POST" action="/aanmelden">
     <h2>Inloggen</h2>
     <fieldset>
       <% if (locals.loginError) { %>
@@ -20,7 +20,7 @@
         <label>Password</label>
       </div>
       <input type="submit" value="login" />
-      <a class="change" href="./signup">Create an acount</a>
+      <a class="change" href="./registreren">Create an acount</a>
     </fieldset>
   </form>
 </main>

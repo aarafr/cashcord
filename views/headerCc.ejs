@@ -30,14 +30,14 @@
           <li class="<%= (path === '/') ? 'active' : '' %>">
             <a href="/">projecten</a>
           </li>
-          <li class="<%= (path === '/compare/compare') ? 'active' : '' %>">
-            <a href="../cashcord/compare">tool</a>
+          <li class="<%= (path === '/cashcord/vergelijk') ? 'active' : '' %>">
+            <a href="../cashcord/vergelijk">tool</a>
           </li>
           <li>
             <% if (locals.loggedIn) { %>
-            <a href="../logout"><button>logout (<%= user.name %>)</button></a>
+            <a href="../afmelden"><button>afmelden (<%= user.name %>)</button></a>
             <% } else { %>
-            <a href="../login"><button>login</button></a>
+            <a href="../aanmelden"><button>aanmelden</button></a>
             <% } %>
           </li>
         </ul>

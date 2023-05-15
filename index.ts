@@ -90,21 +90,21 @@ app.get("/cashcord", (req, res) => {
     res.type("text/html");
     res.render("index", { path: req.path, loggedIn: true, user: req.session.user });
   } else {
-    res.redirect("/login?status=notLoggedIn");
+    res.redirect("/aanmelden?status=notLoggedIn");
   }
 });
 
-app.get("/login", (req, res) => {
+app.get("/aanmelden", (req, res) => {
   if (req.session.loggedIn) {
     res.status(200);
     res.redirect("/");
   } else {
     res.type("text/html");
-    res.render("login", { path: req.path });
+    res.render("aanmelden", { path: req.path });
   }
 });
 
-app.post("/login", async (req, res) => {
+app.post("/aanmelden", async (req, res) => {
   const email = req.body.email.replace(/\s+/g, "");
   const password = req.body.password;
   let user = await client.db("cashcord").collection("users").findOne({ email: email });
@@ -120,7 +120,7 @@ app.post("/login", async (req, res) => {
         };
         res.redirect("/");
       } else {
-        return res.render("login", {
+        return res.render("aanmelden", {
           path: req.path,
           loginError: {
             message: "Onjuist emailadres of wachtwoord",
@@ -129,7 +129,7 @@ app.post("/login", async (req, res) => {
       }
     });
   } else {
-    return res.render("login", {
+    return res.render("aanmelden", {
       path: req.path,
       loginError: {
         message: "Onjuist emailadres of wachtwoord",
@@ -138,7 +138,7 @@ app.post("/login", async (req, res) => {
   }
 });
 
-app.post("/signup", async (req, res) => {
+app.post("/registreren", async (req, res) => {
   console.log(req.body);
   const name = req.body.firstname + " " + req.body.lastname;
   const email = req.body.email.replace(/\s+/g, "");
@@ -150,7 +150,7 @@ app.post("/signup", async (req, res) => {
   const passMatch = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/;
 
   if (!name.match(nameMatch)) {
-    return res.render("signup", {
+    return res.render("registreren", {
       path: req.path,
       loginError: {
         message: "De ingevoerde naam is ongeldig",
@@ -158,7 +158,7 @@ app.post("/signup", async (req, res) => {
     });
   }
   if (!email.match(mailMatch)) {
-    return res.render("signup", {
+    return res.render("registreren", {
       path: req.path,
       loginError: {
         message: "Het ingevoerde email adres is ongeldig",
@@ -166,7 +166,7 @@ app.post("/signup", async (req, res) => {
     });
   }
   if (password !== passwordRepeat) {
-    return res.render("signup", {
+    return res.render("registreren", {
       path: req.path,
       loginError: {
         message: "De ingevoerde wachtwoorden zijn niet gelijk",
@@ -174,7 +174,7 @@ app.post("/signup", async (req, res) => {
     });
   }
   if (!password.match(passMatch)) {
-    return res.render("signup", {
+    return res.render("registreren", {
       path: req.path,
       loginError: {
         message:
@@ -197,7 +197,7 @@ app.post("/signup", async (req, res) => {
       res.redirect("/");
     });
   } else {
-    res.render("signup", {
+    res.render("registreren", {
       path: req.path,
       loginError: {
         message: "Een gebruiker met dit emailadres bestaat al",
@@ -206,37 +206,39 @@ app.post("/signup", async (req, res) => {
   }
 });
 
-app.get("/signup", (req, res) => {
+app.get("/registreren", (req, res) => {
   if (req.session.loggedIn) {
     res.status(200);
     res.redirect("/");
   }
   res.type("text/html");
-  res.render("signup", { path: req.path });
+  res.render("registreren", { path: req.path });
 });
 
-app.get("/logout", (req, res) => {
+app.get("/afmelden", (req, res) => {
   if (req.session.loggedIn) {
     req.session.destroy((err) => {});
-    res.redirect("/?status=logout");
+    res.redirect("/?status=afgemeld");
   }
   res.redirect("/");
 });
 
-app.get("/cashcord/compare", (req, res) => {
+app.get("/cashcord/vergelijk", (req, res) => {
   if (req.session.loggedIn) {
     res.type("text/html");
-    res.render("compare", { path: req.path, loggedIn: true, user: req.session.user });
+    res.render("vergelijk", { path: req.path, loggedIn: true, user: req.session.user });
   } else {
-    res.redirect("/login?status=notLoggedIn");
+    res.redirect("/aanmelden?status=notLoggedIn");
   }
 });
+
+app.post("cashcord/vergelijk", (req, res) => {});
 
 app.get("/pokemon", (req, res) => {
   if (req.session.loggedIn) {
     res.redirect("/?status=geenToegang");
   } else {
-    res.redirect("/login?status=notLoggedIn");
+    res.redirect("/aanmelden?status=notLoggedIn");
   }
 });
 
@@ -244,7 +246,7 @@ app.get("/fortnite", (req, res) => {
   if (req.session.loggedIn) {
     res.redirect("/?status=geenToegang");
   } else {
-    res.redirect("/login?status=notLoggedIn");
+    res.redirect("/aanmelden?status=notLoggedIn");
   }
 });
 
@@ -252,7 +254,7 @@ app.get("/mtg", (req, res) => {
   if (req.session.loggedIn) {
     res.redirect("/?status=geenToegang");
   } else {
-    res.redirect("/login?status=notLoggedIn");
+    res.redirect("/aanmelden?status=notLoggedIn");
   }
 });
 
@@ -260,7 +262,7 @@ app.get("/fifa", (req, res) => {
   if (req.session.loggedIn) {
     res.redirect("/?status=geenToegang");
   } else {
-    res.redirect("/login?status=notLoggedIn");
+    res.redirect("/aanmelden?status=notLoggedIn");
   }
 });
 
@@ -268,7 +270,7 @@ app.get("/lotr", (req, res) => {
   if (req.session.loggedIn) {
     res.redirect("/?status=geenToegang");
   } else {
-    res.redirect("/login?status=notLoggedIn");
+    res.redirect("/aanmelden?status=notLoggedIn");
   }
 });
 
@@ -276,7 +278,7 @@ app.get("/lego-masters", (req, res) => {
   if (req.session.loggedIn) {
     res.redirect("/?status=geenToegang");
   } else {
-    res.redirect("/login?status=notLoggedIn");
+    res.redirect("/aanmelden?status=notLoggedIn");
   }
 });
 
