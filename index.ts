@@ -2,14 +2,22 @@ import path from "path";
 import express from "express";
 import { MongoClient, ObjectId } from "mongodb";
 const bodyParser = require("body-parser"); // npm install body-parser
-const session = require("express-session");
+import session from "express-session";
+
 // const { body, validationResult } = require('express-validator'); // npm install express-validator
+
+declare module "express-session" {
+  interface SessionData {
+    loggedIn: Boolean;
+    user: User;
+  }
+}
 
 interface User {
   _id?: ObjectId;
   name: string;
   email: string;
-  password: string;
+  password?: string;
 }
 
 let MongoPassword = encodeURIComponent("hhfrp132545ppokhh1");
@@ -78,7 +86,7 @@ app.get("/home", (req, res) => {
 });
 
 app.get("/login", (req, res) => {
-  if (session.loggedIn) {
+  if (req.session.loggedIn) {
     res.status(200);
     res.redirect("/projecten");
   } else {
@@ -90,13 +98,17 @@ app.get("/login", (req, res) => {
 app.post("/login", async (req, res) => {
   const email = req.body.email.replace(/\s+/g, "");
   const password = req.body.password;
-  const user = await client.db("cashcord").collection("users").findOne({ email: email });
+  let user = await client.db("cashcord").collection("users").findOne({ email: email });
 
   if (user !== null) {
     bcrypt.compare(password, user.password, function (err: any, result: any) {
       if (result) {
-        session.loggedIn = true;
-        session.user = user;
+        req.session.loggedIn = true;
+        req.session.user = {
+          _id: user?._id,
+          name: user?.name,
+          email: user?.email,
+        };
         res.redirect("/projecten");
       } else {
         return res.render("login", {
@@ -170,8 +182,8 @@ app.post("/signup", async (req, res) => {
         password: hash,
       };
       client.db("cashcord").collection("users").insertOne(userObj);
-      session.loggedIn = true;
-      session.user = userObj;
+      req.session.loggedIn = true;
+      req.session.user = userObj;
       res.status(200);
       res.redirect("/projecten");
     });
@@ -186,7 +198,7 @@ app.post("/signup", async (req, res) => {
 });
 
 app.get("/signup", (req, res) => {
-  if (session.loggedIn) {
+  if (req.session.loggedIn) {
     res.status(200);
     res.redirect("/projecten");
   }
@@ -195,19 +207,17 @@ app.get("/signup", (req, res) => {
 });
 
 app.get("/logout", (req, res) => {
-  if (session.loggedIn) {
-    res.status(200);
-    res.redirect("/?status=loggedOut");
-  } else {
-    res.redirect("/");
+  if (req.session.loggedIn) {
+    req.session.destroy((err) => {});
   }
+  res.redirect("/");
 });
 
 app.get("/projecten", (req, res) => {
-  if (session.loggedIn) {
+  if (req.session.loggedIn) {
     res.render("landing", {
       path: req.path,
-      user: session.user,
+      user: req.session.user,
     });
   } else {
     res.status(200);
@@ -216,7 +226,7 @@ app.get("/projecten", (req, res) => {
 });
 
 app.get("/compare", (req, res) => {
-  if (session.loggedIn) {
+  if (req.session.loggedIn) {
     res.type("text/html");
     res.render("compare", { path: req.path });
   } else {
