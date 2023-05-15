@@ -7,7 +7,7 @@
   "name": "cashcord_version_1.0.5",
   "version": "1.0.1",
   "description": "express.ts website",
-  "main": "index.js",
+  "main": "index.ts",
   "directories": {
     "doc": "docs"
   },

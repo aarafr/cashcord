@@ -20,9 +20,8 @@ interface User {
   password?: string;
 }
 
-let MongoPassword = encodeURIComponent("hhfrp132545ppokhh1");
-const url = `mongodb+srv://nodejs_user:NAgARzje8W6aosBL@cluster0.tzj4rtf.mongodb.net/?retryWrites=true&w=majority`;
-const client = new MongoClient(url);
+const uri = `mongodb+srv://nodejs_user:oGerFp37BHztuXWX@cluster0.ubsbpv8.mongodb.net/?retryWrites=true&w=majority`;
+const client = new MongoClient(uri);
 
 const exit = async () => {
   try {
