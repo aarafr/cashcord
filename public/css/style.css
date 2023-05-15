@@ -358,6 +358,11 @@ main{
     top: -10px;
     color: #000;
 }
+
+
+
+
+
 .login  div input:focus,
 .login  div input:valid{
     border-color: #000;
