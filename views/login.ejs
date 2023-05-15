@@ -1,6 +1,6 @@
 <%- include('header'); %>
 <main class="login">
-  <form>
+  <form method="POST" action="/login">
     <h2>Inloggen</h2>
     <fieldset>
       <% if (locals.loginError) { %>
