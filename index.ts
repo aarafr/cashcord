@@ -122,7 +122,7 @@ app.post("/aanmelden", async (req, res) => {
           name: user?.name,
           email: user?.email,
         };
-        res.redirect("/");
+        res.redirect("/?status=aangemeld");
       } else {
         return res.render("aanmelden", {
           path: req.path,
@@ -198,7 +198,7 @@ app.post("/registreren", async (req, res) => {
       req.session.loggedIn = true;
       req.session.user = userObj;
       res.status(200);
-      res.redirect("/");
+      res.redirect("/?status=geregistreerd");
     });
   } else {
     res.render("registreren", {
