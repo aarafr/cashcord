@@ -78,6 +78,10 @@ app.use(
 
 app.get("/", (req, res) => {
   res.type("text/html");
+  res.render("landing", { path: req.path });
+});
+app.get("/home", (req, res) => {
+  res.type("text/html");
   res.render("index", { path: req.path });
 });
 
