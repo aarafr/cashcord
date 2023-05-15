@@ -21,8 +21,18 @@
   <body>
     <header>
       <span id="hamburger-icon" class="material-symbols-outlined">menu</span>
+      <a href="/cashcord"><img src="../assets/cashcord-logo.png" alt="logo" /></a>
       <nav>
         <ul>
+          <li class="<%= (path === '/cashcord') ? 'active' : '' %>">
+            <a href="/cashcord">home</a>
+          </li>
+          <li class="<%= (path === '/') ? 'active' : '' %>">
+            <a href="/">projecten</a>
+          </li>
+          <li class="<%= (path === '/compare/compare') ? 'active' : '' %>">
+            <a href="../cashcord/compare">tool</a>
+          </li>
           <li>
             <% if (locals.loggedIn) { %>
             <a href="../logout"><button>logout (<%= user.name %>)</button></a>

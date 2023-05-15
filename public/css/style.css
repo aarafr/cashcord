@@ -31,9 +31,8 @@ header button{
     background: linear-gradient(to right, #4ECDF1, #542FFE);
     border: none;
     border-radius: 1rem;
-    width: 80px;
+    padding: .5rem 1rem;
     height: var(--button-height);
-    padding: calc(var(--standard-mpg)+10px);
     color: #fff;
     font-size: var(--button-font-size);
     font-weight: bold;

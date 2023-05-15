@@ -76,18 +76,26 @@ app.use(
 );
 
 app.get("/", (req, res) => {
-  res.type("text/html");
-  res.render("landing", { path: req.path });
+  if (req.session.loggedIn) {
+    res.type("text/html");
+    res.render("landing", { path: req.path, loggedIn: true, user: req.session.user });
+  } else {
+    res.render("landing", { path: req.path, loggedIn: false });
+  }
 });
-app.get("/home", (req, res) => {
-  res.type("text/html");
-  res.render("index", { path: req.path });
+app.get("/cashcord", (req, res) => {
+  if (req.session.loggedIn) {
+    res.type("text/html");
+    res.render("index", { path: req.path, loggedIn: true, user: req.session.user });
+  } else {
+    res.redirect("/login?status=notLoggedIn");
+  }
 });
 
 app.get("/login", (req, res) => {
   if (req.session.loggedIn) {
     res.status(200);
-    res.redirect("/projecten");
+    res.redirect("/");
   } else {
     res.type("text/html");
     res.render("login", { path: req.path });
@@ -108,7 +116,7 @@ app.post("/login", async (req, res) => {
           name: user?.name,
           email: user?.email,
         };
-        res.redirect("/projecten");
+        res.redirect("/");
       } else {
         return res.render("login", {
           path: req.path,
@@ -184,7 +192,7 @@ app.post("/signup", async (req, res) => {
       req.session.loggedIn = true;
       req.session.user = userObj;
       res.status(200);
-      res.redirect("/projecten");
+      res.redirect("/");
     });
   } else {
     res.render("signup", {
@@ -199,7 +207,7 @@ app.post("/signup", async (req, res) => {
 app.get("/signup", (req, res) => {
   if (req.session.loggedIn) {
     res.status(200);
-    res.redirect("/projecten");
+    res.redirect("/");
   }
   res.type("text/html");
   res.render("signup", { path: req.path });
@@ -208,28 +216,64 @@ app.get("/signup", (req, res) => {
 app.get("/logout", (req, res) => {
   if (req.session.loggedIn) {
     req.session.destroy((err) => {});
+    res.redirect("/?status=logout");
   }
   res.redirect("/");
 });
 
-app.get("/projecten", (req, res) => {
+app.get("/cashcord/compare", (req, res) => {
   if (req.session.loggedIn) {
-    res.render("landing", {
-      path: req.path,
-      user: req.session.user,
-    });
+    res.type("text/html");
+    res.render("compare", { path: req.path, loggedIn: true, user: req.session.user });
   } else {
-    res.status(200);
     res.redirect("/login?status=notLoggedIn");
   }
 });
 
-app.get("/compare", (req, res) => {
+app.get("/pokemon", (req, res) => {
   if (req.session.loggedIn) {
-    res.type("text/html");
-    res.render("compare", { path: req.path });
+    res.redirect("/?status=geenToegang");
   } else {
-    res.status(200);
+    res.redirect("/login?status=notLoggedIn");
+  }
+});
+
+app.get("/fortnite", (req, res) => {
+  if (req.session.loggedIn) {
+    res.redirect("/?status=geenToegang");
+  } else {
+    res.redirect("/login?status=notLoggedIn");
+  }
+});
+
+app.get("/mtg", (req, res) => {
+  if (req.session.loggedIn) {
+    res.redirect("/?status=geenToegang");
+  } else {
+    res.redirect("/login?status=notLoggedIn");
+  }
+});
+
+app.get("/fifa", (req, res) => {
+  if (req.session.loggedIn) {
+    res.redirect("/?status=geenToegang");
+  } else {
+    res.redirect("/login?status=notLoggedIn");
+  }
+});
+
+app.get("/lotr", (req, res) => {
+  if (req.session.loggedIn) {
+    res.redirect("/?status=geenToegang");
+  } else {
+    res.redirect("/login?status=notLoggedIn");
+  }
+});
+
+app.get("/lego-masters", (req, res) => {
+  if (req.session.loggedIn) {
+    res.redirect("/?status=geenToegang");
+  } else {
     res.redirect("/login?status=notLoggedIn");
   }
 });
