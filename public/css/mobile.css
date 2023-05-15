@@ -144,8 +144,15 @@
     }
 }
 
-
-
+@media (max-width: 768px) {
+    #landing section {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    #landing article img {
+        width: 100%;
+        height: auto;
+      }
+    }
 /* HEIGHT */
 
 @media screen and (max-height: 900px) {
