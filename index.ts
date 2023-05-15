@@ -1,21 +1,40 @@
 import path from "path";
 import express from "express";
-import { MongoClient } from "mongodb";
+import { MongoClient, ObjectId } from "mongodb";
 const bodyParser = require("body-parser"); // npm install body-parser
 const session = require("express-session");
 // const { body, validationResult } = require('express-validator'); // npm install express-validator
 
 interface User {
+  _id?: ObjectId;
   name: string;
   email: string;
   password: string;
 }
 
-let userArray: User[] = [];
-
 let MongoPassword = encodeURIComponent("hhfrp132545ppokhh1");
 const url = `mongodb+srv://nodejs_user:NAgARzje8W6aosBL@cluster0.tzj4rtf.mongodb.net/?retryWrites=true&w=majority`;
 const client = new MongoClient(url);
+
+const exit = async () => {
+  try {
+    await client.close();
+    console.log("Disconnected from database");
+  } catch (error) {
+    console.error(error);
+  }
+  process.exit(0);
+};
+
+const connect = async () => {
+  try {
+    await client.connect();
+    console.log("Connected to database");
+    process.on("SIGINT", exit);
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 const app = express();
 const bcrypt = require("bcrypt");
@@ -58,17 +77,43 @@ app.get("/login", (req, res) => {
   if (session.loggedIn) {
     res.status(200);
     res.redirect("/projecten");
+  } else {
+    res.type("text/html");
+    res.render("login", { path: req.path });
   }
-  res.type("text/html");
-  res.render("login", { path: req.path });
 });
 
-app.post("/login", (req, res) => {
+app.post("/login", async (req, res) => {
   const email = req.body.email.replace(/\s+/g, "");
   const password = req.body.password;
+  const user = await client.db("cashcord").collection("users").findOne({ email: email });
+
+  if (user !== null) {
+    bcrypt.compare(password, user.password, function (err: any, result: any) {
+      if (result) {
+        session.loggedIn = true;
+        session.user = user;
+        res.redirect("/projecten");
+      } else {
+        return res.render("login", {
+          path: req.path,
+          loginError: {
+            message: "Onjuist emailadres of wachtwoord",
+          },
+        });
+      }
+    });
+  } else {
+    return res.render("login", {
+      path: req.path,
+      loginError: {
+        message: "Onjuist emailadres of wachtwoord",
+      },
+    });
+  }
 });
 
-app.post("/signup", (req, res) => {
+app.post("/signup", async (req, res) => {
   console.log(req.body);
   const name = req.body.firstname + " " + req.body.lastname;
   const email = req.body.email.replace(/\s+/g, "");
@@ -112,19 +157,28 @@ app.post("/signup", (req, res) => {
       },
     });
   }
-  bcrypt.hash(password, saltRounds, async (err: any, hash: string) => {
-    const userObj: User = {
-      name: name,
-      email: email,
-      password: hash,
-    };
-    data(userObj);
-    console.log(userObj);
-    session.loggedIn = true;
-    session.user = userObj;
-    res.status(200);
-    res.redirect("/projecten");
-  });
+
+  if ((await client.db("cashcord").collection("users").findOne({ email: email })) === null) {
+    bcrypt.hash(password, saltRounds, async (err: any, hash: string) => {
+      const userObj: User = {
+        name: name,
+        email: email,
+        password: hash,
+      };
+      client.db("cashcord").collection("users").insertOne(userObj);
+      session.loggedIn = true;
+      session.user = userObj;
+      res.status(200);
+      res.redirect("/projecten");
+    });
+  } else {
+    res.render("signup", {
+      path: req.path,
+      loginError: {
+        message: "Een gebruiker met dit emailadres bestaat al",
+      },
+    });
+  }
 });
 
 app.get("/signup", (req, res) => {
@@ -158,30 +212,20 @@ app.get("/projecten", (req, res) => {
 });
 
 app.get("/compare", (req, res) => {
-  res.type("text/html");
-  res.render("compare", { path: req.path });
-});
-
-const data = async (userObj: User) => {
-  try {
-    await client.connect();
-    console.log("connected to the database");
-
-    userArray.push(userObj);
-
-    let users: User[] = await client.db("cashcord").collection("users").find<User>({}).toArray();
-    if (users.length == 0) {
-      await client.db("cashcord").collection("users").insertMany(userArray);
-    }
-  } catch (e) {
-    console.error(e);
-  } finally {
-    await client.close();
+  if (session.loggedIn) {
+    res.type("text/html");
+    res.render("compare", { path: req.path });
+  } else {
+    res.status(200);
+    res.redirect("/login?status=notLoggedIn");
   }
-};
+});
 
 app.use((req, res, next) => {
   res.status(404).render("404");
 });
 
-app.listen(app.get("port"), () => console.log("[server] http://localhost:" + app.get("port")));
+app.listen(app.get("port"), async () => {
+  await connect();
+  console.log("[server] http://localhost:" + app.get("port"));
+});
