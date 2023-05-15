@@ -90,7 +90,7 @@ app.get("/cashcord", (req, res) => {
     res.type("text/html");
     res.render("index", { path: req.path, loggedIn: true, user: req.session.user });
   } else {
-    res.redirect("/aanmelden?status=notLoggedIn");
+    res.redirect("/aanmelden?status=nietAangemeld");
   }
 });
 
@@ -99,6 +99,10 @@ app.get("/aanmelden", (req, res) => {
     res.status(200);
     res.redirect("/");
   } else {
+    if (req.query.status === "nietAangemeld") {
+      res.type("text/html");
+      res.render("aanmelden", { path: req.path, status: { message: "Aanmelding vereist" } });
+    }
     res.type("text/html");
     res.render("aanmelden", { path: req.path });
   }
@@ -228,7 +232,7 @@ app.get("/cashcord/vergelijk", (req, res) => {
     res.type("text/html");
     res.render("vergelijk", { path: req.path, loggedIn: true, user: req.session.user });
   } else {
-    res.redirect("/aanmelden?status=notLoggedIn");
+    res.redirect("/aanmelden?status=nietAangemeld");
   }
 });
 
@@ -238,7 +242,7 @@ app.get("/pokemon", (req, res) => {
   if (req.session.loggedIn) {
     res.redirect("/?status=geenToegang");
   } else {
-    res.redirect("/aanmelden?status=notLoggedIn");
+    res.redirect("/aanmelden?status=nietAangemeld");
   }
 });
 
@@ -246,7 +250,7 @@ app.get("/fortnite", (req, res) => {
   if (req.session.loggedIn) {
     res.redirect("/?status=geenToegang");
   } else {
-    res.redirect("/aanmelden?status=notLoggedIn");
+    res.redirect("/aanmelden?status=nietAangemeld");
   }
 });
 
@@ -254,7 +258,7 @@ app.get("/mtg", (req, res) => {
   if (req.session.loggedIn) {
     res.redirect("/?status=geenToegang");
   } else {
-    res.redirect("/aanmelden?status=notLoggedIn");
+    res.redirect("/aanmelden?status=nietAangemeld");
   }
 });
 
@@ -262,7 +266,7 @@ app.get("/fifa", (req, res) => {
   if (req.session.loggedIn) {
     res.redirect("/?status=geenToegang");
   } else {
-    res.redirect("/aanmelden?status=notLoggedIn");
+    res.redirect("/aanmelden?status=nietAangemeld");
   }
 });
 
@@ -270,7 +274,7 @@ app.get("/lotr", (req, res) => {
   if (req.session.loggedIn) {
     res.redirect("/?status=geenToegang");
   } else {
-    res.redirect("/aanmelden?status=notLoggedIn");
+    res.redirect("/aanmelden?status=nietAangemeld");
   }
 });
 
@@ -278,7 +282,7 @@ app.get("/lego-masters", (req, res) => {
   if (req.session.loggedIn) {
     res.redirect("/?status=geenToegang");
   } else {
-    res.redirect("/aanmelden?status=notLoggedIn");
+    res.redirect("/aanmelden?status=nietAangemeld");
   }
 });
 

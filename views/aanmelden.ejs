@@ -5,6 +5,8 @@
     <fieldset>
       <% if (locals.loginError) { %>
       <p class="error"><%= loginError.message %></p>
+      <% } %> <% if (locals.status) { %>
+      <p class="error"><%= status.message %></p>
       <% } %>
       <div>
         <input
