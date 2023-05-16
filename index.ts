@@ -102,9 +102,10 @@ app.get("/aanmelden", (req, res) => {
     if (req.query.status === "nietAangemeld") {
       res.type("text/html");
       res.render("aanmelden", { path: req.path, status: { message: "Aanmelding vereist" } });
+    } else {
+      res.type("text/html");
+      res.render("aanmelden", { path: req.path });
     }
-    res.type("text/html");
-    res.render("aanmelden", { path: req.path });
   }
 });
 
@@ -214,9 +215,10 @@ app.get("/registreren", (req, res) => {
   if (req.session.loggedIn) {
     res.status(200);
     res.redirect("/");
+  } else {
+    res.type("text/html");
+    res.render("registreren", { path: req.path });
   }
-  res.type("text/html");
-  res.render("registreren", { path: req.path });
 });
 
 app.get("/afmelden", (req, res) => {
