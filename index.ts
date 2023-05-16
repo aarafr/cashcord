@@ -225,8 +225,9 @@ app.get("/afmelden", (req, res) => {
   if (req.session.loggedIn) {
     req.session.destroy((err) => {});
     res.redirect("/?status=afgemeld");
+  } else {
+    res.redirect("/");
   }
-  res.redirect("/");
 });
 
 app.get("/cashcord/vergelijk", (req, res) => {
