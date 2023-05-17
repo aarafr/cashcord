@@ -72,41 +72,33 @@ app.use(
     secret: "XtjnbAymL5hoan1nw8dWqbKzhQu3GvAlvdNAo0XPh8EHetasKN",
     resave: false,
     saveUninitialized: true,
-    cookie: { maxAge: 86400 },
+    cookie: { maxAge: 3600000 },
   })
 );
 app.use(nocache());
 
 app.get("/", (req, res) => {
   if (req.session.loggedIn) {
-    res.type("text/html");
-    res.render("landing", { path: req.path, loggedIn: true, user: req.session.user });
-  } else {
-    res.render("landing", { path: req.path, loggedIn: false });
+    return res.render("landing", { path: req.path, loggedIn: true, user: req.session.user });
   }
+  res.render("landing", { path: req.path, loggedIn: false });
 });
+
 app.get("/cashcord", (req, res) => {
   if (req.session.loggedIn) {
-    res.type("text/html");
-    res.render("index", { path: req.path, loggedIn: true, user: req.session.user });
-  } else {
-    res.redirect("/aanmelden?status=nietAangemeld");
+    return res.render("index", { path: req.path, loggedIn: true, user: req.session.user });
   }
+  res.redirect("/aanmelden?status=nietAangemeld");
 });
 
 app.get("/aanmelden", (req, res) => {
   if (req.session.loggedIn) {
-    res.status(200);
-    res.redirect("/");
-  } else {
-    if (req.query.status === "nietAangemeld") {
-      res.type("text/html");
-      res.render("aanmelden", { path: req.path, status: { message: "Aanmelding vereist" } });
-    } else {
-      res.type("text/html");
-      res.render("aanmelden", { path: req.path });
-    }
+    return res.redirect("/");
   }
+  if (req.query.status === "nietAangemeld") {
+    return res.render("aanmelden", { path: req.path, status: { message: "Aanmelding vereist" } });
+  }
+  res.render("aanmelden", { path: req.path });
 });
 
 app.post("/aanmelden", async (req, res) => {
@@ -123,7 +115,7 @@ app.post("/aanmelden", async (req, res) => {
           name: user?.name,
           email: user?.email,
         };
-        res.redirect("/?status=aangemeld");
+        return res.redirect("/?status=aangemeld");
       } else {
         return res.render("aanmelden", {
           path: req.path,
@@ -133,14 +125,13 @@ app.post("/aanmelden", async (req, res) => {
         });
       }
     });
-  } else {
-    return res.render("aanmelden", {
-      path: req.path,
-      loginError: {
-        message: "Onjuist emailadres of wachtwoord",
-      },
-    });
   }
+  res.render("aanmelden", {
+    path: req.path,
+    loginError: {
+      message: "Onjuist emailadres of wachtwoord",
+    },
+  });
 });
 
 app.post("/registreren", async (req, res) => {
@@ -198,95 +189,81 @@ app.post("/registreren", async (req, res) => {
       client.db("cashcord").collection("users").insertOne(userObj);
       req.session.loggedIn = true;
       req.session.user = userObj;
-      res.status(200);
-      res.redirect("/?status=geregistreerd");
-    });
-  } else {
-    res.render("registreren", {
-      path: req.path,
-      loginError: {
-        message: "Een gebruiker met dit emailadres bestaat al",
-      },
+      return res.redirect("/?status=geregistreerd");
     });
   }
+  res.render("registreren", {
+    path: req.path,
+    loginError: {
+      message: "Een gebruiker met dit emailadres bestaat al",
+    },
+  });
 });
 
 app.get("/registreren", (req, res) => {
   if (req.session.loggedIn) {
-    res.status(200);
-    res.redirect("/");
-  } else {
-    res.type("text/html");
-    res.render("registreren", { path: req.path });
+    return res.redirect("/");
   }
+  res.render("registreren", { path: req.path });
 });
 
 app.get("/afmelden", (req, res) => {
   if (req.session.loggedIn) {
     req.session.destroy((err) => {});
-    res.redirect("/?status=afgemeld");
-  } else {
-    res.redirect("/");
+    return res.redirect("/?status=afgemeld");
   }
+  res.redirect("/");
 });
 
 app.get("/cashcord/vergelijk", (req, res) => {
   if (req.session.loggedIn) {
-    res.type("text/html");
-    res.render("vergelijk", { path: req.path, loggedIn: true, user: req.session.user });
-  } else {
-    res.redirect("/aanmelden?status=nietAangemeld");
+    return res.render("vergelijk", { path: req.path, loggedIn: true, user: req.session.user });
   }
+  res.redirect("/aanmelden?status=nietAangemeld");
 });
 
 app.post("cashcord/vergelijk", (req, res) => {});
 
 app.get("/pokemon", (req, res) => {
   if (req.session.loggedIn) {
-    res.redirect("/?status=geenToegang");
-  } else {
-    res.redirect("/aanmelden?status=nietAangemeld");
+    return res.redirect("/?status=geenToegang");
   }
+  res.redirect("/aanmelden?status=nietAangemeld");
 });
 
 app.get("/fortnite", (req, res) => {
   if (req.session.loggedIn) {
-    res.redirect("/?status=geenToegang");
-  } else {
-    res.redirect("/aanmelden?status=nietAangemeld");
+    return res.redirect("/?status=geenToegang");
   }
+  res.redirect("/aanmelden?status=nietAangemeld");
 });
 
 app.get("/mtg", (req, res) => {
   if (req.session.loggedIn) {
-    res.redirect("/?status=geenToegang");
-  } else {
-    res.redirect("/aanmelden?status=nietAangemeld");
+    return res.redirect("/?status=geenToegang");
   }
+  res.redirect("/aanmelden?status=nietAangemeld");
 });
 
 app.get("/fifa", (req, res) => {
   if (req.session.loggedIn) {
-    res.redirect("/?status=geenToegang");
-  } else {
-    res.redirect("/aanmelden?status=nietAangemeld");
+    return res.redirect("/?status=geenToegang");
   }
+  res.redirect("/aanmelden?status=nietAangemeld");
 });
 
 app.get("/lotr", (req, res) => {
   if (req.session.loggedIn) {
-    res.redirect("/?status=geenToegang");
-  } else {
-    res.redirect("/aanmelden?status=nietAangemeld");
+    return res.redirect("/?status=geenToegang");
   }
+  res.redirect("/aanmelden?status=nietAangemeld");
 });
 
 app.get("/lego-masters", (req, res) => {
   if (req.session.loggedIn) {
-    res.redirect("/?status=geenToegang");
-  } else {
-    res.redirect("/aanmelden?status=nietAangemeld");
+    return res.redirect("/?status=geenToegang");
   }
+  res.redirect("/aanmelden?status=nietAangemeld");
 });
 
 app.use((req, res, next) => {
