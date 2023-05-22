@@ -1,0 +1,49 @@
+<%- include('header', { title: "registreren" }); %>
+<main class="login">
+  <form method="POST" action="/registreren">
+    <h2>Account aanmaken</h2>
+    <fieldset>
+      <% if (locals.loginError) { %>
+      <p class="error"><%= loginError.message %></p>
+      <% } %>
+      <div>
+        <input name="firstname" type="text" pattern="^[a-zA-Z]+$" required />
+        <label>First name</label>
+      </div>
+      <div>
+        <input name="lastname" type="text" pattern="^[a-zA-Z ]+$" required />
+        <label>Last name</label>
+      </div>
+      <div>
+        <input
+          name="email"
+          type="email"
+          pattern="^[a-zA-Z0-9.]+@[a-zA-Z]+\.[a-zA-Z]{2,3}$"
+          required
+        />
+        <label>Mail adress</label>
+      </div>
+      <div>
+        <input
+          name="password"
+          type="password"
+          pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$"
+          required
+        />
+        <label>Password</label>
+      </div>
+      <div>
+        <input
+          name="passwordRepeat"
+          type="password"
+          pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$"
+          required
+        />
+        <label>Confirm password</label>
+      </div>
+      <input type="submit" value="sign up" />
+      <a class="change" href="./aanmelden">I have a account</a>
+    </fieldset>
+  </form>
+</main>
+<%- include('footer'); %>

@@ -1,0 +1,29 @@
+<%- include('header', { title: "aanmelden" }); %>
+<main class="login">
+  <form method="POST" action="/aanmelden">
+    <h2>Inloggen</h2>
+    <fieldset>
+      <% if (locals.loginError) { %>
+      <p class="error"><%= loginError.message %></p>
+      <% } %> <% if (locals.status) { %>
+      <p class="error"><%= status.message %></p>
+      <% } %>
+      <div>
+        <input
+          type="email"
+          name="email"
+          pattern="^[a-zA-Z0-9.]+@[a-zA-Z]+\.[a-zA-Z]{2,3}$"
+          required
+        />
+        <label>Mail adress</label>
+      </div>
+      <div>
+        <input type="password" name="password" required />
+        <label>Password</label>
+      </div>
+      <input type="submit" value="login" />
+      <a class="change" href="./registreren">Create an acount</a>
+    </fieldset>
+  </form>
+</main>
+<%- include('footer'); %>

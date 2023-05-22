@@ -1,0 +1,7 @@
+# TypeScript/ JavaScript
+node_modules
+.env 
+
+# C#
+obj
+bin

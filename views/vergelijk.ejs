@@ -1,0 +1,40 @@
+<%- include('headerCc', { title: "vergelijk" } ) %>
+<main id="compare">
+  <section>
+    <form action="">
+      <div>
+        <p>BE</p>
+        <input
+          type="number"
+          name="ondernemingsnummer1"
+          id="ondernemingsnummer1"
+          placeholder="0535880359"
+          required
+          tabindex="1"
+        />
+      </div>
+      <div class="compare-icon">
+        <label for=""><span class="material-symbols-outlined">compare_arrows</span></label>
+        <input type="submit" value="" tabindex="3" />
+      </div>
+      <div>
+        <p>BE</p>
+        <input
+          type="number"
+          name="ondernemingsnummer2"
+          id="ondernemingsnummer2"
+          placeholder="0535880359"
+          required
+          tabindex="2"
+        />
+      </div>
+    </form>
+  </section>
+  <section>
+    <h1>History</h1>
+    <article>
+      <h2></h2>
+    </article>
+  </section>
+</main>
+<%- include('footer'); %>
