@@ -1,0 +1,33 @@
+[
+  {
+    "ReferenceNumber": "2021-00000148",
+    "DepositDate": "2021-12-07",
+    "ExerciseDates": {
+      "startDate": "2020-01-01",
+      "endDate": "2020-12-31"
+    },
+    "ModelType": "m02-f",
+    "DepositType": "Initial",
+    "Language": "NL",
+    "Currency": "EUR",
+    "EnterpriseNumber": "0203201340",
+    "EnterpriseName": "NationaleBankvanBelgië",
+    "Address": {
+      "Box": null,
+      "City": "Bruxelles",
+      "CountryCode": "BE",
+      "Number": "14",
+      "PostalCode": "1000",
+      "Street": "BoulevarddeBerlaimont"
+    },
+    "LegalForm": "014",
+    "LegalSituation": "000",
+    "FullFillLegalValidation": true,
+    "ActivityCode": null,
+    "GeneralAssemblyDate": "2021-06-01",
+    "AccountingDataURL": "https://ws.cbso.nbb.be/authentic/deposit/2021-00000148/accountingData",
+    "DataVersion": "Authentic",
+    "ImprovementDate": null,
+    "CorrectedData": null
+  }
+]

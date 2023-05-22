@@ -241,6 +241,9 @@ main{
 #compare form{
     width: 100%;
     padding: var(--large-mpg);
+}
+
+#compare form .form-fields-container{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -251,7 +254,7 @@ main{
     gap: var(--small-mgp);
     align-items: center;
 }
-#compare form p{
+#compare form .be-placeholder{
     background-color: #4158D0;
     background-image: linear-gradient(60deg, #4158D0 0%, #527bf8 46%, #4ecdf1 100%);
     color: #fff;
@@ -345,10 +348,12 @@ main{
     gap: 30px;
 }
 
-.login form .error{
-    background-color: #ff0f0f;
+.status{
+    color: #fff;
         padding: 0.5rem 1rem;
         border-radius: 0.5rem;
+        width: fit-content;
+        margin: 1rem auto;
 }
 
 .login  form .change{

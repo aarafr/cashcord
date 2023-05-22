@@ -1,9 +1,10 @@
 import path from "path";
-import express from "express";
+import express, { response } from "express";
 import { MongoClient, ObjectId } from "mongodb";
 const bodyParser = require("body-parser"); // npm install body-parser
 import session from "express-session";
 import nocache from "nocache";
+import axios from "axios";
 
 // const { body, validationResult } = require('express-validator'); // npm install express-validator
 
@@ -95,7 +96,13 @@ app.get("/aanmelden", (req, res) => {
   if (req.session.loggedIn) {
     return res.redirect("/");
   } else if (req.query.status === "nietAangemeld") {
-    return res.render("aanmelden", { path: req.path, status: { message: "Aanmelding vereist" } });
+    return res.render("aanmelden", {
+      path: req.path,
+      status: {
+        type: "error",
+        message: "Aanmelding vereist",
+      },
+    });
   } else {
     res.render("aanmelden", { path: req.path });
   }
@@ -119,7 +126,8 @@ app.post("/aanmelden", async (req, res) => {
       } else {
         return res.render("aanmelden", {
           path: req.path,
-          loginError: {
+          status: {
+            type: "error",
             message: "Onjuist emailadres of wachtwoord",
           },
         });
@@ -128,7 +136,8 @@ app.post("/aanmelden", async (req, res) => {
   } else {
     res.render("aanmelden", {
       path: req.path,
-      loginError: {
+      status: {
+        type: "error",
         message: "Onjuist emailadres of wachtwoord",
       },
     });
@@ -149,7 +158,7 @@ app.post("/registreren", async (req, res) => {
   if (!name.match(nameMatch)) {
     return res.render("registreren", {
       path: req.path,
-      loginError: {
+      status: {
         message: "De ingevoerde naam is ongeldig",
       },
     });
@@ -157,7 +166,8 @@ app.post("/registreren", async (req, res) => {
   if (!email.match(mailMatch)) {
     return res.render("registreren", {
       path: req.path,
-      loginError: {
+      status: {
+        type: "error",
         message: "Het ingevoerde email adres is ongeldig",
       },
     });
@@ -165,7 +175,8 @@ app.post("/registreren", async (req, res) => {
   if (password !== passwordRepeat) {
     return res.render("registreren", {
       path: req.path,
-      loginError: {
+      status: {
+        type: "error",
         message: "De ingevoerde wachtwoorden zijn niet gelijk",
       },
     });
@@ -173,7 +184,8 @@ app.post("/registreren", async (req, res) => {
   if (!password.match(passMatch)) {
     return res.render("registreren", {
       path: req.path,
-      loginError: {
+      status: {
+        type: "error",
         message:
           "Je wachtwoord moet minimaal 8 tekens bevatten, waarvan minstens 1 cijfer, 1 kleine letter, 1 hoofdletter en minstens 1 van deze karakters !@#$%^&*",
       },
@@ -195,7 +207,8 @@ app.post("/registreren", async (req, res) => {
   } else {
     res.render("registreren", {
       path: req.path,
-      loginError: {
+      status: {
+        type: "error",
         message: "Een gebruiker met dit emailadres bestaat al",
       },
     });
@@ -224,7 +237,38 @@ app.get("/cashcord/vergelijk", (req, res) => {
   res.redirect("/aanmelden?status=nietAangemeld");
 });
 
-app.post("cashcord/vergelijk", (req, res) => {});
+app.post("/cashcord/vergelijk", async (req, res) => {
+  if (!req.session.loggedIn) {
+    return res.redirect("/aanmelden?status=nietAangemeld");
+  }
+  const ondernemingsnummer1: string = req.body.ondernemingsnummer1;
+  const ondernemingsnummer2: string = req.body.ondernemingsnummer2;
+  const ondernemingsnummerRegex = /^[0-9]{9}$/;
+  if (
+    !ondernemingsnummer1.match(ondernemingsnummerRegex) ||
+    !ondernemingsnummer2.match(ondernemingsnummerRegex)
+  ) {
+    return res.render("vergelijk", {
+      path: req.path,
+      status: {
+        type: "error",
+        message: "Ongeldige ondernemingsnummer(s). Een ondernemingsnummer bestaat uit 9 cijfers",
+      },
+    });
+  }
+  const respose1 = await axios
+    .get("http://localhost:3000/assets/example-api-response.json")
+    .then((response) => response.data);
+  const respose2 = await axios
+    .get("http://localhost:3000/assets/example-api-response.json")
+    .then((response) => response.data);
+
+  res.render("vergelijk", {
+    path: req.path,
+    loggedIn: true,
+    user: req.session.user,
+  });
+});
 
 app.get("/pokemon", (req, res) => {
   if (req.session.loggedIn) {
