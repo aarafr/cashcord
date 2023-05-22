@@ -73,27 +73,28 @@ main{
     justify-content: center;
   }
   
-  #landing section {
+  #landing ul {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 50px;
   }
   
-  #landing article {
+  #landing li {
     position: relative;
+    list-style-type: none;
   }
   
-  #landing article img {
+  #landing li img {
     width: 200px;
     height: 200px;
   }
   
-  #landing article a {
+  #landing li a {
     display: block;
     height: 100%;
   }
   
-  #landing article-content {
+  #landing li-content {
     position: absolute;
     top: 0;
     left: 0;
