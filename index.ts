@@ -143,7 +143,7 @@ app.post("/registreren", async (req, res) => {
 
   const nameMatch = /^[a-zA-Z ]+$/;
   const mailMatch = /^[a-zA-Z0-9.]+@[a-zA-Z]+\.[a-zA-Z]{2,3}$/;
-  const passMatch = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/;
+  const passMatch = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#?$%^&*]).{8,}$/;
 
   if (!name.match(nameMatch)) {
     return res.render("registreren", {
