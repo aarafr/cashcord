@@ -94,11 +94,11 @@ app.get("/cashcord", (req, res) => {
 app.get("/aanmelden", (req, res) => {
   if (req.session.loggedIn) {
     return res.redirect("/");
-  }
-  if (req.query.status === "nietAangemeld") {
+  } else if (req.query.status === "nietAangemeld") {
     return res.render("aanmelden", { path: req.path, status: { message: "Aanmelding vereist" } });
+  } else {
+    res.render("aanmelden", { path: req.path });
   }
-  res.render("aanmelden", { path: req.path });
 });
 
 app.post("/aanmelden", async (req, res) => {
@@ -125,13 +125,14 @@ app.post("/aanmelden", async (req, res) => {
         });
       }
     });
+  } else {
+    res.render("aanmelden", {
+      path: req.path,
+      loginError: {
+        message: "Onjuist emailadres of wachtwoord",
+      },
+    });
   }
-  res.render("aanmelden", {
-    path: req.path,
-    loginError: {
-      message: "Onjuist emailadres of wachtwoord",
-    },
-  });
 });
 
 app.post("/registreren", async (req, res) => {
