@@ -191,13 +191,14 @@ app.post("/registreren", async (req, res) => {
       req.session.user = userObj;
       return res.redirect("/?status=geregistreerd");
     });
+  } else {
+    res.render("registreren", {
+      path: req.path,
+      loginError: {
+        message: "Een gebruiker met dit emailadres bestaat al",
+      },
+    });
   }
-  res.render("registreren", {
-    path: req.path,
-    loginError: {
-      message: "Een gebruiker met dit emailadres bestaat al",
-    },
-  });
 });
 
 app.get("/registreren", (req, res) => {
