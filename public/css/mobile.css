@@ -139,16 +139,16 @@
 
 
 @media screen and (max-width: 1200px) {
-    #home section:first-child p{
+    #home ul:first-child p{
         width: calc(100vw - 100px);
     }
 }
 
 @media (max-width: 768px) {
-    #landing section {
+    #landing ul {
       grid-template-columns: repeat(2, 1fr);
     }
-    #landing article img {
+    #landing li img {
         width: 100%;
         height: auto;
       }
