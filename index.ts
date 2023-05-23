@@ -259,12 +259,16 @@ app.post("/cashcord/vergelijk", async (req, res) => {
       },
     });
   }
-  const data: AxiosResponse = await apiFetch(
+  const onderneming1: AxiosResponse = await apiFetch(
     "http://localhost:3000/assets/example-api-response.json"
   );
-  console.log(data);
+  const onderneming2: AxiosResponse = await apiFetch(
+    "http://localhost:3000/assets/example-api-response.json"
+  );
   res.render("vergelijk", {
     path: req.path,
+    onderneming1,
+    onderneming2,
     loggedIn: true,
     user: req.session.user,
   });
@@ -279,10 +283,11 @@ const apiFetch = async (url: string) => {
       Accept: "application/json",
     },
   };
+  console.log(config);
   return await axios
     .get(url, config)
-    .then((response) => response.data)
-    .catch((e) => {});
+    .then((response) => (response.status === 200 ? response.data : response.status))
+    .catch((e) => e);
 };
 
 app.get("/pokemon", (req, res) => {
