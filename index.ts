@@ -4,7 +4,8 @@ import { MongoClient, ObjectId } from "mongodb";
 const bodyParser = require("body-parser"); // npm install body-parser
 import session from "express-session";
 import nocache from "nocache";
-import axios from "axios";
+import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
+import { v4 as uuidv4 } from "uuid";
 
 // const { body, validationResult } = require('express-validator'); // npm install express-validator
 
@@ -256,19 +257,31 @@ app.post("/cashcord/vergelijk", async (req, res) => {
       },
     });
   }
-  const respose1 = await axios
-    .get("http://localhost:3000/assets/example-api-response.json")
-    .then((response) => response.data);
-  const respose2 = await axios
-    .get("http://localhost:3000/assets/example-api-response.json")
-    .then((response) => response.data);
-
+  const data: AxiosResponse = await apiFetch(
+    "http://localhost:3000/assets/example-api-response.json"
+  );
+  console.log(data);
   res.render("vergelijk", {
     path: req.path,
     loggedIn: true,
     user: req.session.user,
   });
 });
+
+const apiFetch = async (url: string) => {
+  const config: AxiosRequestConfig = {
+    method: "get",
+    headers: {
+      "X-Request-Id": uuidv4(),
+      "NBB-CBSO-Subscription-Key": "",
+      Accept: "application/json",
+    },
+  };
+  return await axios
+    .get(url, config)
+    .then((response) => response.data)
+    .catch((e) => {});
+};
 
 app.get("/pokemon", (req, res) => {
   if (req.session.loggedIn) {
