@@ -1,12 +1,15 @@
 import path from "path";
 import express, { response } from "express";
 import { MongoClient, ObjectId } from "mongodb";
-const bodyParser = require("body-parser"); // npm install body-parser
 import session from "express-session";
 import nocache from "nocache";
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import { v4 as uuidv4 } from "uuid";
+import dotenv from "dotenv";
 
+const bodyParser = require("body-parser"); // npm install body-parser
+
+dotenv.config();
 // const { body, validationResult } = require('express-validator'); // npm install express-validator
 
 declare module "express-session" {
@@ -23,8 +26,7 @@ interface User {
   password?: string;
 }
 
-const uri = `mongodb+srv://nodejs_user:oGerFp37BHztuXWX@cluster0.ubsbpv8.mongodb.net/?retryWrites=true&w=majority`;
-const client = new MongoClient(uri);
+const client = new MongoClient(process.env.MONGODB_URI!);
 
 const exit = async () => {
   try {
@@ -273,7 +275,7 @@ const apiFetch = async (url: string) => {
     method: "get",
     headers: {
       "X-Request-Id": uuidv4(),
-      "NBB-CBSO-Subscription-Key": "",
+      "NBB-CBSO-Subscription-Key": process.env.API_KEY,
       Accept: "application/json",
     },
   };
