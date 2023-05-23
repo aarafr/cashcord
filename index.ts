@@ -259,12 +259,23 @@ app.post("/cashcord/vergelijk", async (req, res) => {
       },
     });
   }
-  const onderneming1: AxiosResponse = await apiFetch(
+  const onderneming1: any = await apiFetch(
     "http://localhost:3000/assets/example-api-response.json"
   );
-  const onderneming2: AxiosResponse = await apiFetch(
+  const onderneming2: any = await apiFetch(
     "http://localhost:3000/assets/example-api-response.json"
   );
+  if (onderneming1 === 404 || onderneming2 === 404) {
+    return res.render("vergelijk", {
+      path: req.path,
+      status: {
+        type: "error",
+        message: "Ongeldige ondernemingsnummer(s)",
+      },
+      loggedIn: true,
+      user: req.session.user,
+    });
+  }
   res.render("vergelijk", {
     path: req.path,
     onderneming1,
@@ -283,11 +294,10 @@ const apiFetch = async (url: string) => {
       Accept: "application/json",
     },
   };
-  console.log(config);
   return await axios
     .get(url, config)
-    .then((response) => (response.status === 200 ? response.data : response.status))
-    .catch((e) => e);
+    .then((response) => response.data)
+    .catch((e) => e.response.status);
 };
 
 app.get("/pokemon", (req, res) => {
