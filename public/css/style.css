@@ -82,6 +82,7 @@ main{
   #landing li {
     position: relative;
     list-style-type: none;
+    text-align: center;
   }
   
   #landing li img {
@@ -105,7 +106,13 @@ main{
     height: 100%;
   }
   
-
+  #landing li p {
+    position: absolute;
+    bottom: 0; /* Position the <p> element at the bottom */
+    left: 0;
+    right: 0; /* Stretch the <p> element horizontally */
+    margin: 0;
+  }
 
 
 #home section{
