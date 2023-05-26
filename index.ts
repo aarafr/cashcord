@@ -1,11 +1,10 @@
 import path from "path";
-import express, { response } from "express";
+import express from "express";
 import { MongoClient, ObjectId } from "mongodb";
 import session from "express-session";
 import nocache from "nocache";
-import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
-import { v4 as uuidv4 } from "uuid";
 import dotenv from "dotenv";
+import { getReferences, getReference, getAccountingData } from "./getData";
 
 const bodyParser = require("body-parser"); // npm install body-parser
 
@@ -53,15 +52,6 @@ const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
 app.use(bodyParser.urlencoded({ extended: true }));
-
-// let api = "https://ws.uat2.cbso.nbb.be/authentic/legalEntity/0453488757";
-// fetch(api)
-//   .then(response => {
-//     if(!response.ok){
-//       throw new Error("Network issue");
-//     }
-//     return response.json;
-//   })
 
 app.set("port", 3000);
 app.set("view engine", "ejs");
@@ -246,59 +236,72 @@ app.post("/cashcord/vergelijk", async (req, res) => {
   }
   const ondernemingsnummer1: string = req.body.ondernemingsnummer1;
   const ondernemingsnummer2: string = req.body.ondernemingsnummer2;
-  const ondernemingsnummerRegex = /^[0-9]{9}$/;
+  const ondernemingsnummerRegex = /^[0-9]{9,10}$/;
   if (
     !ondernemingsnummer1.match(ondernemingsnummerRegex) ||
     !ondernemingsnummer2.match(ondernemingsnummerRegex)
   ) {
     return res.render("vergelijk", {
       path: req.path,
+      ondernemingsnummer1,
+      ondernemingsnummer2,
       status: {
-        type: "error",
-        message: "Ongeldige ondernemingsnummer(s). Een ondernemingsnummer bestaat uit 9 cijfers",
+        color: "#ff0f0f",
+        message:
+          "Ongeldige ondernemingsnummer(s). Een ondernemingsnummer bestaat uit 9 of 10 cijfers",
       },
     });
   }
-  const onderneming1: any = await apiFetch(
-    "http://localhost:3000/assets/example-api-response.json"
-  );
-  const onderneming2: any = await apiFetch(
-    "http://localhost:3000/assets/example-api-response.json"
-  );
-  if (onderneming1 === 404 || onderneming2 === 404) {
+
+  const references1 = await getReferences(ondernemingsnummer1);
+  const references2 = await getReferences(ondernemingsnummer2);
+
+  if (references1 === 404 || references2 === 404) {
     return res.render("vergelijk", {
       path: req.path,
+      ondernemingsnummer1,
+      ondernemingsnummer2,
       status: {
-        type: "error",
+        color: "#ff0f0f",
         message: "Ongeldige ondernemingsnummer(s)",
+      },
+    });
+  }
+  if (req.body.references1 && req.body.references2) {
+    console.log(req.body.references1);
+    const reference1 = await getReference(req.body.references1);
+    const reference2 = await getReference(req.body.references2);
+    console.log(reference1);
+    console.log(reference2);
+    return res.render("vergelijk", {
+      path: req.path,
+      ondernemingsnummer1,
+      ondernemingsnummer2,
+      reference: {
+        reference1,
+        reference2,
+      },
+      loggedIn: true,
+      user: req.session.user,
+    });
+  } else {
+    return res.render("vergelijk", {
+      path: req.path,
+      ondernemingsnummer1,
+      ondernemingsnummer2,
+      references: {
+        references1,
+        references2,
+      },
+      status: {
+        color: "#198754",
+        message: "selecteer het jaar van de raadpleging",
       },
       loggedIn: true,
       user: req.session.user,
     });
   }
-  res.render("vergelijk", {
-    path: req.path,
-    onderneming1,
-    onderneming2,
-    loggedIn: true,
-    user: req.session.user,
-  });
 });
-
-const apiFetch = async (url: string) => {
-  const config: AxiosRequestConfig = {
-    method: "get",
-    headers: {
-      "X-Request-Id": uuidv4(),
-      "NBB-CBSO-Subscription-Key": process.env.API_KEY,
-      Accept: "application/json",
-    },
-  };
-  return await axios
-    .get(url, config)
-    .then((response) => response.data)
-    .catch((e) => e.response.status);
-};
 
 app.get("/pokemon", (req, res) => {
   if (req.session.loggedIn) {

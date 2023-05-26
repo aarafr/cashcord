@@ -3,7 +3,7 @@
   <section>
     <form action="vergelijk" method="post">
       <% if (locals.status) { %>
-      <p class="status" style="background-color: <%= (status.type === 'error') ? '#ff0f0f' : '' %>">
+      <p class="status" style="background-color: <%= status.color %>">
         <%= status.message %>
       </p>
       <% } %>
@@ -17,7 +17,15 @@
             placeholder="0535880359"
             required
             tabindex="1"
+            value="<%= locals.ondernemingsnummer1 %>"
           />
+          <% if (locals.references) { %>
+          <select name="references1" id="references1">
+            <% for (let i = 0; i<references.references1.length; i++)   { %>
+              <option value="<%= references.references1[i] %>"><%= (references.references1[i]).substring(0, 4) %></option>
+            <% } %>
+          </select>
+          <% } %>
         </div>
         <div class="compare-icon">
           <label for=""><span class="material-symbols-outlined">compare_arrows</span></label>
@@ -32,7 +40,15 @@
             placeholder="0535880359"
             required
             tabindex="2"
+            value="<%= locals.ondernemingsnummer2 %>"
           />
+          <% if (locals.references) { %>
+            <select name="references2" id="references2">
+            <% for (let i = 0; i<references.references2.length; i++)   { %>
+              <option value="<%= references.references2[i] %>"><%= (references.references2[i]).substring(0, 4) %></option>
+            <% } %>
+          </select>
+          <% } %>
         </div>
       </div>
     </form>
