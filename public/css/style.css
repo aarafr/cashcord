@@ -255,7 +255,7 @@ main{
 #compare form .form-fields-container{
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-evenly;
     gap: var(--width-gap);
 }
 #compare form div{
@@ -457,10 +457,13 @@ main{
     color: #000;
 }
 
-
-
-
-
+.reference {
+    display: flex;
+        padding: var(--large-mpg);
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+}
 
 footer{
     position: relative;

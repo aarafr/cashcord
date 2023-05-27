@@ -4,7 +4,7 @@ import { MongoClient, ObjectId } from "mongodb";
 import session from "express-session";
 import nocache from "nocache";
 import dotenv from "dotenv";
-import { getReferences, getReference, getAccountingData } from "./getData";
+import { getReferences, getReference, getAccountingData, getAccountingDataPdf } from "./getData";
 
 const bodyParser = require("body-parser"); // npm install body-parser
 
@@ -234,9 +234,11 @@ app.post("/cashcord/vergelijk", async (req, res) => {
   if (!req.session.loggedIn) {
     return res.redirect("/aanmelden?status=nietAangemeld");
   }
+
   const ondernemingsnummer1: string = req.body.ondernemingsnummer1;
   const ondernemingsnummer2: string = req.body.ondernemingsnummer2;
   const ondernemingsnummerRegex = /^[0-9]{9,10}$/;
+
   if (
     !ondernemingsnummer1.match(ondernemingsnummerRegex) ||
     !ondernemingsnummer2.match(ondernemingsnummerRegex)
@@ -256,7 +258,7 @@ app.post("/cashcord/vergelijk", async (req, res) => {
   const references1 = await getReferences(ondernemingsnummer1);
   const references2 = await getReferences(ondernemingsnummer2);
 
-  if (references1 === 404 || references2 === 404) {
+  if (references1 === 404 || references1 === 400 || references2 === 404 || references2 === 400) {
     return res.render("vergelijk", {
       path: req.path,
       ondernemingsnummer1,
@@ -267,19 +269,42 @@ app.post("/cashcord/vergelijk", async (req, res) => {
       },
     });
   }
+
   if (req.body.references1 && req.body.references2) {
-    console.log(req.body.references1);
     const reference1 = await getReference(req.body.references1);
     const reference2 = await getReference(req.body.references2);
-    console.log(reference1);
-    console.log(reference2);
+
+    if (reference1 === 404 || reference2 === 404) {
+      return res.render("vergelijk", {
+        path: req.path,
+        ondernemingsnummer1,
+        ondernemingsnummer2,
+        status: {
+          color: "#ff0f0f",
+          message: "Ongeldige referentie",
+        },
+      });
+    }
+
+    const accoutingData1 = await getAccountingData(reference1.ReferenceNumber);
+    const accoutingData2 = await getAccountingData(reference2.ReferenceNumber);
+
+    console.log(accoutingData1);
     return res.render("vergelijk", {
       path: req.path,
       ondernemingsnummer1,
       ondernemingsnummer2,
+      references: {
+        references1,
+        references2,
+      },
       reference: {
         reference1,
         reference2,
+      },
+      accoutingData: {
+        accoutingData1,
+        accoutingData2,
       },
       loggedIn: true,
       user: req.session.user,
@@ -295,11 +320,18 @@ app.post("/cashcord/vergelijk", async (req, res) => {
       },
       status: {
         color: "#198754",
-        message: "selecteer het jaar van de raadpleging",
+        message: "selecteer het jaar van neerlegging",
       },
       loggedIn: true,
       user: req.session.user,
     });
+  }
+});
+
+app.get("/cashcord/vergelijk/pdf", async (req, res) => {
+  const referenceNumber = req.query.referenceNumber;
+  if (typeof referenceNumber === "string") {
+    res.contentType("application/pdf").send(await getAccountingDataPdf(referenceNumber));
   }
 });
 

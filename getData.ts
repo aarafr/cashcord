@@ -39,6 +39,34 @@ const getReference = async (referenceNumber: string) => {
     .catch((e) => e.response.status);
 };
 
-const getAccountingData = async (referenceNumber: string) => {};
+const getAccountingDataPdf = async (referenceNumber: string) => {
+  const config: AxiosRequestConfig = {
+    method: "get",
+    headers: {
+      "X-Request-Id": uuidv4(),
+      "NBB-CBSO-Subscription-Key": process.env.API_KEY,
+      Accept: "application/pdf",
+    },
+  };
+  return await axios
+    .get(`https://ws.cbso.nbb.be/authentic//deposit/${referenceNumber}/accountingData`, config)
+    .then((response) => response.data)
+    .catch((e) => e.response.status);
+};
 
-export { getReferences, getReference, getAccountingData };
+const getAccountingData = async (referenceNumber: string) => {
+  const config: AxiosRequestConfig = {
+    method: "get",
+    headers: {
+      "X-Request-Id": uuidv4(),
+      "NBB-CBSO-Subscription-Key": process.env.API_KEY,
+      Accept: "application/x.jsonxbrl",
+    },
+  };
+  return await axios
+    .get(`https://ws.cbso.nbb.be/authentic//deposit/${referenceNumber}/accountingData`, config)
+    .then((response) => response.data)
+    .catch((e) => e.response.data);
+};
+
+export { getReferences, getReference, getAccountingData, getAccountingDataPdf };
