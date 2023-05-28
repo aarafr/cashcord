@@ -1,5 +1,5 @@
 #home section:nth-child(2) button::before{
-    content: "more";
+    content: "meer";
     color: #fff;
     display: flex;
     align-items: center;
