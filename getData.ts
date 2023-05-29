@@ -47,6 +47,7 @@ const getAccountingDataPdf = async (referenceNumber: string) => {
       "NBB-CBSO-Subscription-Key": process.env.API_KEY,
       Accept: "application/pdf",
     },
+    responseType: "arraybuffer",
   };
   return await axios
     .get(`https://ws.cbso.nbb.be/authentic//deposit/${referenceNumber}/accountingData`, config)

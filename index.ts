@@ -249,8 +249,7 @@ app.post("/cashcord/vergelijk", async (req, res) => {
       ondernemingsnummer2,
       status: {
         color: "#ff0f0f",
-        message:
-          "Ongeldige ondernemingsnummer(s). Een ondernemingsnummer bestaat uit 9 of 10 cijfers",
+        message: "Ongeldige ondernemingsnummer(s)",
       },
     });
   }
@@ -265,7 +264,7 @@ app.post("/cashcord/vergelijk", async (req, res) => {
       ondernemingsnummer2,
       status: {
         color: "#ff0f0f",
-        message: "Ongeldige ondernemingsnummer(s)",
+        message: "Ondernemingsnummer(s) werd niet gevonden door de Balanscentrale.",
       },
     });
   }
@@ -281,7 +280,7 @@ app.post("/cashcord/vergelijk", async (req, res) => {
         ondernemingsnummer2,
         status: {
           color: "#ff0f0f",
-          message: "Ongeldige referentie",
+          message: "Ongeldige referte(s)",
         },
       });
     }
@@ -289,22 +288,64 @@ app.post("/cashcord/vergelijk", async (req, res) => {
     const accoutingData1 = await getAccountingData(reference1.ReferenceNumber);
     const accoutingData2 = await getAccountingData(reference2.ReferenceNumber);
 
-    console.log(accoutingData1);
+    interface accountDataObj {
+      eigenVermogen: string;
+      schulden: string;
+      bedrijfswinstBedrijfsverlies: string;
+      isWinst: boolean;
+    }
+
+    let accountDataObj1: accountDataObj = null!;
+    let accountDataObj2: accountDataObj = null!;
+
+    if (accoutingData1.status !== 404) {
+      const eigenVermogen = parseInt(
+        accoutingData1.Rubrics.find((obj: any) => obj.Code === "10/15").Value
+      ).toLocaleString("nl-BE");
+      const schulden = parseInt(
+        accoutingData1.Rubrics.find((obj: any) => obj.Code === "42/48").Value
+      ).toLocaleString("nl-BE");
+      const bedrijfswinstBedrijfsverlies = parseInt(
+        accoutingData1.Rubrics.find((obj: any) => obj.Code === "9901").Value
+      ).toLocaleString("nl-BE");
+      const isWinst = parseInt(bedrijfswinstBedrijfsverlies) > 0;
+      accountDataObj1 = {
+        eigenVermogen,
+        schulden,
+        bedrijfswinstBedrijfsverlies,
+        isWinst,
+      };
+    }
+    if (accoutingData2.status !== 404) {
+      const eigenVermogen = parseInt(
+        accoutingData2.Rubrics.find((obj: any) => obj.Code === "10/15").Value
+      ).toLocaleString("nl-BE");
+      const schulden = parseInt(
+        accoutingData2.Rubrics.find((obj: any) => obj.Code === "42/48").Value
+      ).toLocaleString("nl-BE");
+      const bedrijfswinstBedrijfsverlies = parseInt(
+        accoutingData2.Rubrics.find((obj: any) => obj.Code === "9901").Value
+      ).toLocaleString("nl-BE");
+      const isWinst = parseInt(bedrijfswinstBedrijfsverlies) > 0;
+      accountDataObj2 = {
+        eigenVermogen,
+        schulden,
+        bedrijfswinstBedrijfsverlies,
+        isWinst,
+      };
+    }
+
     return res.render("vergelijk", {
       path: req.path,
       ondernemingsnummer1,
       ondernemingsnummer2,
-      references: {
-        references1,
-        references2,
-      },
       reference: {
         reference1,
         reference2,
       },
       accoutingData: {
-        accoutingData1,
-        accoutingData2,
+        accoutingData1: accountDataObj1,
+        accoutingData2: accountDataObj2,
       },
       loggedIn: true,
       user: req.session.user,
@@ -320,7 +361,7 @@ app.post("/cashcord/vergelijk", async (req, res) => {
       },
       status: {
         color: "#198754",
-        message: "selecteer het jaar van neerlegging",
+        message: "Selecteer het jaar van neerlegging",
       },
       loggedIn: true,
       user: req.session.user,

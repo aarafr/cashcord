@@ -281,7 +281,8 @@ main{
     padding: 0;
     margin: 0;
 }
-#compare form input[type="submit"]{
+#compare form input[type="submit"],
+#compare .pdf-btn{
     position: relative;
     padding: 15px;
     border-radius: .8rem;
@@ -314,6 +315,36 @@ main{
     color: var(--color-3);
     font-size: 40px;
 }
+
+#compare table{
+    text-align: left;
+}
+
+#compare table th,
+#compare table td{
+    padding: .5rem;
+}
+
+#compare .pdf-only{
+    color: #E9D502;
+    border-radius: 0;
+    border-bottom: #E9D502 solid 1px;
+}
+#compare .pdf-btn{
+    margin: 1rem auto;
+    width: fit-content;
+    display: block;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    transition: all .25s ease-out;
+    border: transparent solid 1px;
+}
+#compare .pdf-btn:hover {
+    color: #4158D0;
+    background: transparent;
+    border: #4ecdf1 solid 1px;
+}
+
 
 .login{
     padding: 2rem;

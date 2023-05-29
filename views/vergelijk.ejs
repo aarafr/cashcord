@@ -53,39 +53,7 @@
       </div>
     </form>
   </section>
-  <section class="reference">
-    <% if (locals.reference) { %>
-    <article>
-      <h2><%= reference.reference1.EnterpriseName %></h2>
-      <p>
-        Adres:
-        <br>
-        <%= reference.reference1.Address.Street %> <%= reference.reference1.Address.Number %>
-        <br>
-        <%= reference.reference1.Address.PostalCode %> <%= reference.reference1.Address.Number %>, <%= reference.reference1.Address.CountryCode %>
-      </p>
-      <p>Datum van neerlegging: <%= reference.reference1.DepositDate %></p>
-      <a href="vergelijk/pdf?referenceNumber=<%= reference.reference1.ReferenceNumber %>" target="_blank">PDF</a>
-    </article>
-    <article>
-      <h2><%= reference.reference2.EnterpriseName %></h2>
-      <p>
-        Adres:
-        <br>
-        <%= reference.reference2.Address.Street %> <%= reference.reference2.Address.Number %>
-        <br>
-        <%= reference.reference2.Address.PostalCode %> <%= reference.reference2.Address.Number %>, <%= reference.reference2.Address.CountryCode %>
-      </p>
-      <p>Datum van neerlegging: <%= reference.reference2.DepositDate %></p>
-      <% if (!reference.reference2.status === 404) { %>
-
-      <% }else { %>
-      <p>Data is enkel beschiekbaar in PDF vorm</p>
-      <% } %>
-      <a href="vergelijk/pdf?referenceNumber=<%= reference.reference2.ReferenceNumber %>" target="_blank">PDF</a>
-    </article>
-    <% } %>
-  </section>
+  <%- include('onderdelen/reference') %>
   <section>
     <h1>History</h1>
     <article>
