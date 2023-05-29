@@ -25,6 +25,35 @@ interface User {
   password?: string;
 }
 
+interface Reference {
+  ReferenceNumber: string;
+  EnterpriseName: string;
+  EnterpriseNumber: string;
+  DepositDate: string;
+  Address: {
+    City: string;
+    CountryCode: string;
+    Number: string;
+    PostalCode: string;
+    Street: string;
+  };
+  AccountingData: {
+    eigenVermogen: string;
+    schulden: string;
+    bedrijfswinstBedrijfsverlies: string;
+  };
+}
+
+interface Comparison {
+  CompareDate: Date;
+  References: Reference[];
+}
+
+interface UserHistory {
+  UserEmail: string;
+  Comparison: Comparison[];
+}
+
 const client = new MongoClient(process.env.MONGODB_URI!);
 
 const exit = async () => {
@@ -192,7 +221,11 @@ app.post("/registreren", async (req, res) => {
         email: email,
         password: hash,
       };
-      client.db("cashcord").collection("users").insertOne(userObj);
+      await client.db("cashcord").collection("users").insertOne(userObj);
+      await client
+        .db("cashcord")
+        .collection("userHistory")
+        .insertOne({ UserEmail: email, Comparison: [] });
       req.session.loggedIn = true;
       req.session.user = userObj;
       return res.redirect("/?status=geregistreerd");
@@ -237,7 +270,7 @@ app.post("/cashcord/vergelijk", async (req, res) => {
 
   const ondernemingsnummer1: string = req.body.ondernemingsnummer1;
   const ondernemingsnummer2: string = req.body.ondernemingsnummer2;
-  const ondernemingsnummerRegex = /^[0-9]{9,10}$/;
+  const ondernemingsnummerRegex = /^[0-9]{8,10}$/;
 
   if (
     !ondernemingsnummer1.match(ondernemingsnummerRegex) ||
@@ -334,7 +367,50 @@ app.post("/cashcord/vergelijk", async (req, res) => {
         isWinst,
       };
     }
-
+    const comparisonObj: Comparison = {
+      CompareDate: new Date(),
+      References: [
+        {
+          ReferenceNumber: reference1.ReferenceNumber,
+          EnterpriseName: reference1.EnterpriseName,
+          EnterpriseNumber: reference1.EnterpriseNumber,
+          DepositDate: reference1.DepositDate,
+          Address: {
+            City: reference1.City,
+            CountryCode: reference1.CountryCode,
+            Number: reference1.Number,
+            PostalCode: reference1.PostalCode,
+            Street: reference1.Street,
+          },
+          AccountingData: accountDataObj1,
+        },
+        {
+          ReferenceNumber: reference2.ReferenceNumber,
+          EnterpriseName: reference2.EnterpriseName,
+          EnterpriseNumber: reference2.EnterpriseNumber,
+          DepositDate: reference2.DepositDate,
+          Address: {
+            City: reference2.Address.City,
+            CountryCode: reference2.Address.CountryCode,
+            Number: reference2.Address.Number,
+            PostalCode: reference2.Address.PostalCode,
+            Street: reference2.Address.Street,
+          },
+          AccountingData: accountDataObj2,
+        },
+      ],
+    };
+    await client
+      .db("cashcord")
+      .collection("userHistory")
+      .updateOne(
+        { UserEmail: req.session.user!.email },
+        {
+          $push: {
+            Comparison: comparisonObj,
+          },
+        }
+      );
     return res.render("vergelijk", {
       path: req.path,
       ondernemingsnummer1,

@@ -7,7 +7,7 @@
       <br />
       <%= reference.reference1.Address.Street %> <%= reference.reference1.Address.Number %>
       <br />
-      <%= reference.reference1.Address.PostalCode %> <%= reference.reference1.Address.Number %>, <%=
+      <%= reference.reference1.Address.PostalCode %> <%= reference.reference1.Address.City %>, <%=
       reference.reference1.Address.CountryCode %>
     </p>
     <p>Datum van neerlegging: <%= reference.reference1.DepositDate %></p>
@@ -45,9 +45,10 @@
       <br />
       <%= reference.reference2.Address.Street %> <%= reference.reference2.Address.Number %>
       <br />
-      <%= reference.reference2.Address.PostalCode %> <%= reference.reference2.Address.Number %>, <%=
+      <%= reference.reference2.Address.PostalCode %> <%= reference.reference2.Address.City %>, <%=
       reference.reference2.Address.CountryCode %>
     </p>
+
     <p>Datum van neerlegging: <%= reference.reference2.DepositDate %></p>
     <% if (accoutingData.accoutingData2 !== null) { %>
     <table>
