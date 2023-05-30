@@ -4,19 +4,80 @@
   <%= userHistory[i].CompareDate.toLocaleString("nl-BE", { dateStyle: "medium" }) %> <%
   dates.push(userHistory[i].CompareDate.toLocaleString("nl-BE", { dateStyle: "short" })) %>
 </p>
-<% } %>
+<% } let reference1 = userHistory[i].References[0]; let reference2 = userHistory[i].References[1];
+%>
 <button class="history-item">
   <div>
-    <p><%= userHistory[i].References[0].EnterpriseName %></p>
+    <p><%= reference1.EnterpriseName %></p>
     <p>-</p>
-    <p><%= userHistory[i].References[1].EnterpriseName %></p>
+    <p><%= reference2.EnterpriseName %></p>
   </div>
   <div class="hidden">
-    <p>
-      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolores harum eum, minima et
-      suscipit voluptates deserunt, fuga non unde mollitia sunt necessitatibus odio sequi. Doloribus
-      non temporibus harum et dolores.
-    </p>
+    <% if (reference1.AccountingData) { %>
+    <table>
+      <tr>
+        <th>Eigen vermogen</th>
+        <td
+          style="color: <%= (reference2.AccountingData) ? (reference1.AccountingData.eigenVermogen > reference2.AccountingData.eigenVermogen) ? 'green' : 'red' : 'black' %>"
+        >
+          € <%= reference1.AccountingData.eigenVermogen.toLocaleString("nl-BE") %>
+        </td>
+      </tr>
+      <tr>
+        <th>Schulden</th>
+        <td
+          style="color: <%= (reference2.AccountingData) ? (reference1.AccountingData.schulden < reference2.AccountingData.schulden) ? 'green' : 'red' : 'black' %>"
+        >
+          € <%= reference1.AccountingData.schulden.toLocaleString("nl-BE") %>
+        </td>
+      </tr>
+      <tr>
+        <th>
+          <%= (reference1.AccountingData.bedrijfswinstBedrijfsverlies > 0) ? "Bedrijfswinst" :
+          "Bedrijfsverlies" %>
+        </th>
+        <td
+          style="color: <%= (reference2.AccountingData) ? (reference1.AccountingData.bedrijfswinstBedrijfsverlies > reference2.AccountingData.bedrijfswinstBedrijfsverlies) ? 'green' : 'red' : 'black' %>"
+        >
+          € <%= reference1.AccountingData.bedrijfswinstBedrijfsverlies.toLocaleString("nl-BE") %>
+        </td>
+      </tr>
+    </table>
+    <% }else { %>
+    <p class="status pdf-only">Data is enkel beschiekbaar in PDF vorm</p>
+    <% } if (reference2.AccountingData) { %>
+    <table>
+      <tr>
+        <th>Eigen vermogen</th>
+        <td
+          style="color: <%= (reference1.AccountingData) ? (reference2.AccountingData.eigenVermogen > reference1.AccountingData.eigenVermogen) ? 'green' : 'red' : 'black' %>"
+        >
+          € <%= reference2.AccountingData.eigenVermogen.toLocaleString("nl-BE") %>
+        </td>
+      </tr>
+      <tr>
+        <th>Schulden</th>
+        <td
+          style="color: <%= (reference1.AccountingData) ? (reference2.AccountingData.schulden < reference1.AccountingData.schulden) ? 'green' : 'red' : 'black' %>"
+        >
+          € <%= reference2.AccountingData.schulden.toLocaleString("nl-BE") %>
+        </td>
+      </tr>
+      <tr>
+        <th>
+          <%= (reference2.AccountingData.bedrijfswinstBedrijfsverlies > 0) ? "Bedrijfswinst" :
+          "Bedrijfsverlies" %>
+        </th>
+        <td
+          style="color: <%= (reference1.AccountingData) ? (reference2.AccountingData.bedrijfswinstBedrijfsverlies > reference1.AccountingData.bedrijfswinstBedrijfsverlies) ? 'green' : 'red' : 'black' %>"
+        >
+          € <%= reference2.AccountingData.bedrijfswinstBedrijfsverlies.toLocaleString("nl-BE") %>
+        </td>
+      </tr>
+    </table>
+    <% }else { %>
+    <p class="status pdf-only">Data is enkel beschiekbaar in PDF vorm</p>
+    <% } %>
   </div>
 </button>
 <% } }else{ %>

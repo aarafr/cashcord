@@ -374,6 +374,7 @@ main{
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+    align-items: center;
 }
 
 #compare .history-item p{
@@ -390,6 +391,11 @@ main{
     opacity: 1;
     max-height: 10rem;
     transition: all .25s ease-in-out;
+}
+
+#compare .status{
+    border: none;
+    margin: 0;
 }
 
 
