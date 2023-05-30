@@ -1,0 +1,24 @@
+<% let dates = []; if (userHistory.length > 0) { for (let i = 0; i< userHistory.length;i++) { if
+(!dates.includes(userHistory[i].CompareDate.toLocaleString("nl-BE", { dateStyle: "short" }))) { %>
+<p class="date">
+  <%= userHistory[i].CompareDate.toLocaleString("nl-BE", { dateStyle: "medium" }) %> <%
+  dates.push(userHistory[i].CompareDate.toLocaleString("nl-BE", { dateStyle: "short" })) %>
+</p>
+<% } %>
+<button class="history-item">
+  <div>
+    <p><%= userHistory[i].References[0].EnterpriseName %></p>
+    <p>-</p>
+    <p><%= userHistory[i].References[1].EnterpriseName %></p>
+  </div>
+  <div class="hidden">
+    <p>
+      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolores harum eum, minima et
+      suscipit voluptates deserunt, fuga non unde mollitia sunt necessitatibus odio sequi. Doloribus
+      non temporibus harum et dolores.
+    </p>
+  </div>
+</button>
+<% } }else{ %>
+<p class="no-history">Nog geen vergelijkingen</p>
+<% } %>

@@ -15,16 +15,26 @@
     <table>
       <tr>
         <th>Eigen vermogen</th>
-        <td>€ <%= accoutingData.accoutingData1.eigenVermogen %></td>
+        <td
+          style="color: <%= (accoutingData.accoutingData1.eigenVermogen > accoutingData.accoutingData2.eigenVermogen) ? 'green' : 'red' %>"
+        >
+          <%= accoutingData.accoutingData1.eigenVermogen.toLocaleString("NL-be") %>
+        </td>
       </tr>
       <tr>
         <th>Schulden</th>
-        <td>€ <%= accoutingData.accoutingData1.schulden %></td>
+        <td
+          style="color: <%= (accoutingData.accoutingData1.schulden < accoutingData.accoutingData2.schulden) ? 'green' : 'red' %>"
+        >
+          € <%= accoutingData.accoutingData1.schulden.toLocaleString("NL-be") %>
+        </td>
       </tr>
       <tr>
         <th><%= (accoutingData.accoutingData1.isWinst) ? "Bedrijfswinst" : "Bedrijfsverlies" %></th>
-        <td style="color: <%= (accoutingData.accoutingData1.isWinst) ? 'green' : 'red' %>">
-          € <%= accoutingData.accoutingData1.bedrijfswinstBedrijfsverlies %>
+        <td
+          style="color: <%= (accoutingData.accoutingData1.bedrijfswinstBedrijfsverlies > accoutingData.accoutingData2.bedrijfswinstBedrijfsverlies) ? 'green' : 'red' %>"
+        >
+          € <%= accoutingData.accoutingData1.bedrijfswinstBedrijfsverlies.toLocaleString("NL-be") %>
         </td>
       </tr>
     </table>
@@ -54,16 +64,26 @@
     <table>
       <tr>
         <th>Eigen vermogen</th>
-        <td>€ <%= accoutingData.accoutingData2.eigenVermogen %></td>
+        <td
+          style="color: <%= (accoutingData.accoutingData2.eigenVermogen > accoutingData.accoutingData1.eigenVermogen) ? 'green' : 'red' %>"
+        >
+          € <%= accoutingData.accoutingData2.eigenVermogen.toLocaleString("NL-be") %>
+        </td>
       </tr>
       <tr>
         <th>Schulden</th>
-        <td>€ <%= accoutingData.accoutingData2.schulden %></td>
+        <td
+          style="color: <%= (accoutingData.accoutingData2.schulden < accoutingData.accoutingData1.schulden) ? 'green' : 'red' %>"
+        >
+          € <%= accoutingData.accoutingData2.schulden.toLocaleString("NL-be") %>
+        </td>
       </tr>
       <tr>
         <th><%= (accoutingData.accoutingData2.isWinst) ? "Bedrijfswinst" : "Bedrijfsverlies" %></th>
-        <td style="color: <%= (accoutingData.accoutingData2.isWinst) ? 'green' : 'red' %>">
-          € <%= accoutingData.accoutingData2.bedrijfswinstBedrijfsverlies %>
+        <td
+          style="color: <%= (accoutingData.accoutingData2.bedrijfswinstBedrijfsverlies > accoutingData.accoutingData1.bedrijfswinstBedrijfsverlies) ? 'green' : 'red' %>"
+        >
+          € <%= accoutingData.accoutingData2.bedrijfswinstBedrijfsverlies.toLocaleString("NL-be") %>
         </td>
       </tr>
     </table>

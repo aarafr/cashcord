@@ -345,6 +345,53 @@ main{
     border: #4ecdf1 solid 1px;
 }
 
+#compare .history{
+    width: 90%;
+    max-width: 80rem;
+    margin: 0 auto;
+}
+
+#compare .history .date{
+    text-align: center;
+    margin: .5rem;
+}
+
+#compare .history .no-history{
+    text-align: center;
+}
+
+#compare .history-item{
+    margin: 1rem auto;
+    width: 100%;
+    padding: 1rem;
+    cursor: pointer;
+    transition: all .25s ease-in-out;
+    border: 1px solid #542FFE;
+    border-radius: .3rem;
+    background-color: rgba(84, 47, 254, .05);
+}
+#compare .history-item div{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+#compare .history-item p{
+    text-align: left;
+}
+
+#compare .history-item .hidden{
+    max-height: 0rem;
+    opacity: 0;
+    transition: all .25s ease-in-out;
+    overflow: hidden;
+}
+#compare .history-item .visible{
+    opacity: 1;
+    max-height: 10rem;
+    transition: all .25s ease-in-out;
+}
+
 
 .login{
     padding: 2rem;

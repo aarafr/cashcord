@@ -38,14 +38,14 @@ interface Reference {
     Street: string;
   };
   AccountingData: {
-    eigenVermogen: string;
-    schulden: string;
-    bedrijfswinstBedrijfsverlies: string;
+    eigenVermogen: number;
+    schulden: number;
+    bedrijfswinstBedrijfsverlies: number;
   };
 }
 
 interface Comparison {
-  CompareDate: Date;
+  CompareDate: any;
   References: Reference[];
 }
 
@@ -256,9 +256,18 @@ app.get("/afmelden", (req, res) => {
   res.redirect("/");
 });
 
-app.get("/cashcord/vergelijk", (req, res) => {
+app.get("/cashcord/vergelijk", async (req, res) => {
   if (req.session.loggedIn) {
-    return res.render("vergelijk", { path: req.path, loggedIn: true, user: req.session.user });
+    const userHistory: any = await client
+      .db("cashcord")
+      .collection("userHistory")
+      .findOne({ UserEmail: req.session.user!.email });
+    return res.render("vergelijk", {
+      path: req.path,
+      loggedIn: true,
+      user: req.session.user,
+      userHistory: userHistory.Comparison.reverse(),
+    });
   }
   res.redirect("/aanmelden?status=nietAangemeld");
 });
@@ -267,7 +276,10 @@ app.post("/cashcord/vergelijk", async (req, res) => {
   if (!req.session.loggedIn) {
     return res.redirect("/aanmelden?status=nietAangemeld");
   }
-
+  let userHistory: any = await client
+    .db("cashcord")
+    .collection("userHistory")
+    .findOne({ UserEmail: req.session.user!.email });
   const ondernemingsnummer1: string = req.body.ondernemingsnummer1;
   const ondernemingsnummer2: string = req.body.ondernemingsnummer2;
   const ondernemingsnummerRegex = /^[0-9]{8,10}$/;
@@ -284,6 +296,9 @@ app.post("/cashcord/vergelijk", async (req, res) => {
         color: "#ff0f0f",
         message: "Ongeldige ondernemingsnummer(s)",
       },
+      loggedIn: true,
+      user: req.session.user,
+      userHistory: userHistory.Comparison.reverse(),
     });
   }
 
@@ -299,6 +314,9 @@ app.post("/cashcord/vergelijk", async (req, res) => {
         color: "#ff0f0f",
         message: "Ondernemingsnummer(s) werd niet gevonden door de Balanscentrale.",
       },
+      loggedIn: true,
+      user: req.session.user,
+      userHistory: userHistory.Comparison.reverse(),
     });
   }
 
@@ -315,6 +333,9 @@ app.post("/cashcord/vergelijk", async (req, res) => {
           color: "#ff0f0f",
           message: "Ongeldige referte(s)",
         },
+        loggedIn: true,
+        user: req.session.user,
+        userHistory: userHistory.Comparison.reverse(),
       });
     }
 
@@ -322,9 +343,9 @@ app.post("/cashcord/vergelijk", async (req, res) => {
     const accoutingData2 = await getAccountingData(reference2.ReferenceNumber);
 
     interface accountDataObj {
-      eigenVermogen: string;
-      schulden: string;
-      bedrijfswinstBedrijfsverlies: string;
+      eigenVermogen: number;
+      schulden: number;
+      bedrijfswinstBedrijfsverlies: number;
       isWinst: boolean;
     }
 
@@ -334,14 +355,14 @@ app.post("/cashcord/vergelijk", async (req, res) => {
     if (accoutingData1.status !== 404) {
       const eigenVermogen = parseInt(
         accoutingData1.Rubrics.find((obj: any) => obj.Code === "10/15").Value
-      ).toLocaleString("nl-BE");
+      );
       const schulden = parseInt(
         accoutingData1.Rubrics.find((obj: any) => obj.Code === "42/48").Value
-      ).toLocaleString("nl-BE");
+      );
       const bedrijfswinstBedrijfsverlies = parseInt(
         accoutingData1.Rubrics.find((obj: any) => obj.Code === "9901").Value
-      ).toLocaleString("nl-BE");
-      const isWinst = parseInt(bedrijfswinstBedrijfsverlies) > 0;
+      );
+      const isWinst = bedrijfswinstBedrijfsverlies > 0;
       accountDataObj1 = {
         eigenVermogen,
         schulden,
@@ -352,14 +373,14 @@ app.post("/cashcord/vergelijk", async (req, res) => {
     if (accoutingData2.status !== 404) {
       const eigenVermogen = parseInt(
         accoutingData2.Rubrics.find((obj: any) => obj.Code === "10/15").Value
-      ).toLocaleString("nl-BE");
+      );
       const schulden = parseInt(
         accoutingData2.Rubrics.find((obj: any) => obj.Code === "42/48").Value
-      ).toLocaleString("nl-BE");
+      );
       const bedrijfswinstBedrijfsverlies = parseInt(
         accoutingData2.Rubrics.find((obj: any) => obj.Code === "9901").Value
-      ).toLocaleString("nl-BE");
-      const isWinst = parseInt(bedrijfswinstBedrijfsverlies) > 0;
+      );
+      const isWinst = bedrijfswinstBedrijfsverlies > 0;
       accountDataObj2 = {
         eigenVermogen,
         schulden,
@@ -411,6 +432,10 @@ app.post("/cashcord/vergelijk", async (req, res) => {
           },
         }
       );
+    userHistory = await client
+      .db("cashcord")
+      .collection("userHistory")
+      .findOne({ UserEmail: req.session.user!.email });
     return res.render("vergelijk", {
       path: req.path,
       ondernemingsnummer1,
@@ -425,6 +450,7 @@ app.post("/cashcord/vergelijk", async (req, res) => {
       },
       loggedIn: true,
       user: req.session.user,
+      userHistory: userHistory.Comparison.reverse(),
     });
   } else {
     return res.render("vergelijk", {
@@ -441,6 +467,7 @@ app.post("/cashcord/vergelijk", async (req, res) => {
       },
       loggedIn: true,
       user: req.session.user,
+      userHistory: userHistory.Comparison.reverse(),
     });
   }
 });
