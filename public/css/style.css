@@ -361,6 +361,9 @@ main{
 }
 
 #compare .history-item{
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
     margin: 1rem auto;
     width: 100%;
     padding: 1rem;
@@ -371,10 +374,11 @@ main{
     background-color: rgba(84, 47, 254, .05);
 }
 #compare .history-item div{
+    width: 20rem;
     display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
+    flex-direction: column;
     align-items: center;
+    justify-content: space-between;
 }
 
 #compare .history-item p{
@@ -389,7 +393,7 @@ main{
 }
 #compare .history-item .visible{
     opacity: 1;
-    max-height: 10rem;
+    max-height: 15rem;
     transition: all .25s ease-in-out;
 }
 
