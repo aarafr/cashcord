@@ -1,6 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import { v4 as uuidv4 } from "uuid";
-import { parseXbrlFile } from "xbrl-parser";
 
 const getReferences = async (legalEntityId: string) => {
   const config: AxiosRequestConfig = {

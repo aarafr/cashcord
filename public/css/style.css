@@ -243,9 +243,9 @@ main{
     height: 150px;
 }
 
-#compare section:last-child{
+/* #compare section:last-child{
     height: calc(100vh - var(--footer-height) - var(--header-height) - 150px);
-}
+} */
 
 #compare form{
     width: 100%;
