@@ -325,6 +325,12 @@ main{
     padding: .5rem;
 }
 
+#compare .reference article{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
 #compare .pdf-only{
     color: #E9D502;
     border-radius: 0;
@@ -399,7 +405,7 @@ main{
 
 #compare .status{
     border: none;
-    margin: 0;
+    margin: 1rem auto;
 }
 
 

@@ -16,7 +16,7 @@
       <tr>
         <th>Eigen vermogen</th>
         <td
-          style="color: <%= (accoutingData.accoutingData1.eigenVermogen > accoutingData.accoutingData2.eigenVermogen) ? 'green' : 'red' %>"
+          style="color: <%= (accoutingData.accoutingData2) ? (accoutingData.accoutingData1.eigenVermogen > accoutingData.accoutingData2.eigenVermogen) ? 'green' : 'red' : 'black' %>"
         >
           <%= accoutingData.accoutingData1.eigenVermogen.toLocaleString("NL-be") %>
         </td>
@@ -24,7 +24,7 @@
       <tr>
         <th>Schulden</th>
         <td
-          style="color: <%= (accoutingData.accoutingData1.schulden < accoutingData.accoutingData2.schulden) ? 'green' : 'red' %>"
+          style="color: <%= (accoutingData.accoutingData2) ? (accoutingData.accoutingData1.schulden < accoutingData.accoutingData2.schulden) ? 'green' : 'red' : 'black' %>"
         >
           € <%= accoutingData.accoutingData1.schulden.toLocaleString("NL-be") %>
         </td>
@@ -32,7 +32,7 @@
       <tr>
         <th><%= (accoutingData.accoutingData1.isWinst) ? "Bedrijfswinst" : "Bedrijfsverlies" %></th>
         <td
-          style="color: <%= (accoutingData.accoutingData1.bedrijfswinstBedrijfsverlies > accoutingData.accoutingData2.bedrijfswinstBedrijfsverlies) ? 'green' : 'red' %>"
+          style="color: <%= (accoutingData.accoutingData2) ? (accoutingData.accoutingData1.bedrijfswinstBedrijfsverlies > accoutingData.accoutingData2.bedrijfswinstBedrijfsverlies) ? 'green' : 'red' : 'black' %>"
         >
           € <%= accoutingData.accoutingData1.bedrijfswinstBedrijfsverlies.toLocaleString("NL-be") %>
         </td>
@@ -65,7 +65,7 @@
       <tr>
         <th>Eigen vermogen</th>
         <td
-          style="color: <%= (accoutingData.accoutingData2.eigenVermogen > accoutingData.accoutingData1.eigenVermogen) ? 'green' : 'red' %>"
+          style="color: <%= (accoutingData.accoutingData1) ? (accoutingData.accoutingData2.eigenVermogen > accoutingData.accoutingData1.eigenVermogen) ? 'green' : 'red' : 'black' %>"
         >
           € <%= accoutingData.accoutingData2.eigenVermogen.toLocaleString("NL-be") %>
         </td>
@@ -73,7 +73,7 @@
       <tr>
         <th>Schulden</th>
         <td
-          style="color: <%= (accoutingData.accoutingData2.schulden < accoutingData.accoutingData1.schulden) ? 'green' : 'red' %>"
+          style="color: <%= (accoutingData.accoutingData1) ? (accoutingData.accoutingData2.schulden < accoutingData.accoutingData1.schulden) ? 'green' : 'red' : 'black' %>"
         >
           € <%= accoutingData.accoutingData2.schulden.toLocaleString("nl-BE") %>
         </td>
@@ -81,7 +81,7 @@
       <tr>
         <th><%= (accoutingData.accoutingData2.isWinst) ? "Bedrijfswinst" : "Bedrijfsverlies" %></th>
         <td
-          style="color: <%= (accoutingData.accoutingData2.bedrijfswinstBedrijfsverlies > accoutingData.accoutingData1.bedrijfswinstBedrijfsverlies) ? 'green' : 'red' %>"
+          style="color: <%= (accoutingData.accoutingData1) ? (accoutingData.accoutingData2.bedrijfswinstBedrijfsverlies > accoutingData.accoutingData1.bedrijfswinstBedrijfsverlies) ? 'green' : 'red' : 'black' %>"
         >
           € <%= accoutingData.accoutingData2.bedrijfswinstBedrijfsverlies.toLocaleString("nl-BE") %>
         </td>
