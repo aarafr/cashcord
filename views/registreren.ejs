@@ -4,17 +4,17 @@
     <h2>Account aanmaken</h2>
     <fieldset>
       <% if (locals.status) { %>
-      <p class="status" style="background-color: <%= (status.type === 'error') ? '#ff0f0f' : '' %>">
+      <p class="status" style="background-color: <%= (status.type === 'error') ? '#cc3300' : '' %>">
         <%= status.message %>
       </p>
       <% } %>
       <div>
         <input name="firstname" type="text" pattern="^[a-zA-Z]+$" required />
-        <label>First name</label>
+        <label>Voornaam</label>
       </div>
       <div>
         <input name="lastname" type="text" pattern="^[a-zA-Z ]+$" required />
-        <label>Last name</label>
+        <label>Achternaam</label>
       </div>
       <div>
         <input
@@ -23,7 +23,7 @@
           pattern="^[a-zA-Z0-9.]+@[a-zA-Z]+\.[a-zA-Z]{2,3}$"
           required
         />
-        <label>Mail adress</label>
+        <label>Emailadres</label>
       </div>
       <div>
         <input
@@ -32,7 +32,7 @@
           pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#?$%^&*]).{8,}$"
           required
         />
-        <label>Password</label>
+        <label>Wachtwoord</label>
       </div>
       <div>
         <input
@@ -41,10 +41,10 @@
           pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#?$%^&*]).{8,}$"
           required
         />
-        <label>Confirm password</label>
+        <label>Bevestig wachtwoord</label>
       </div>
-      <input type="submit" value="sign up" />
-      <a class="change" href="./aanmelden">I have a account</a>
+      <input type="submit" value="registreren" />
+      <a class="change" href="./aanmelden">Heb je al een account?</a>
     </fieldset>
   </form>
 </main>

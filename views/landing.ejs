@@ -31,5 +31,8 @@
     </li>
   </ul>
 </main>
-
-<%- include('footer') %>
+<% if (status !== "") {%>
+<div class="status-message" style="background-color: <%= status.color %>">
+  <%= status.message %>
+</div>
+<% } %> <%- include('footer') %>

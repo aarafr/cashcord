@@ -101,10 +101,37 @@ app.use(
 app.use(nocache());
 
 app.get("/", (req, res) => {
-  if (req.session.loggedIn) {
-    return res.render("landing", { path: req.path, loggedIn: true, user: req.session.user });
+  let message: string = "";
+  let color: string = "";
+  if (req.query.status) {
+    switch (req.query.status) {
+      case "afgemeld":
+        message = "afgemeld";
+        color = "#99cc33";
+        break;
+      case "aangemeld":
+        message = "aangemeld";
+        color = "#99cc33";
+        break;
+      case "geregistreerd":
+        message = "succesvol geregistreerd";
+        color = "#99cc33";
+        break;
+      case "geenToegang":
+        message = "u hebt geen toegang tot dit project";
+        color = "#ffcc00";
+        break;
+    }
   }
-  res.render("landing", { path: req.path, loggedIn: false });
+  if (req.session.loggedIn) {
+    return res.render("landing", {
+      path: req.path,
+      loggedIn: true,
+      user: req.session.user,
+      status: { message, color },
+    });
+  }
+  res.render("landing", { path: req.path, loggedIn: false, status: { message, color } });
 });
 
 app.get("/cashcord", (req, res) => {
@@ -120,10 +147,7 @@ app.get("/aanmelden", (req, res) => {
   } else if (req.query.status === "nietAangemeld") {
     return res.render("aanmelden", {
       path: req.path,
-      status: {
-        type: "error",
-        message: "Aanmelding vereist",
-      },
+      status: { message: "aanmelding vereist", color: "#cc3300" },
     });
   } else {
     res.render("aanmelden", { path: req.path });
@@ -148,8 +172,7 @@ app.post("/aanmelden", async (req, res) => {
       } else {
         return res.render("aanmelden", {
           path: req.path,
-          status: {
-            type: "error",
+          loginError: {
             message: "Onjuist emailadres of wachtwoord",
           },
         });
@@ -158,8 +181,7 @@ app.post("/aanmelden", async (req, res) => {
   } else {
     res.render("aanmelden", {
       path: req.path,
-      status: {
-        type: "error",
+      loginError: {
         message: "Onjuist emailadres of wachtwoord",
       },
     });
@@ -293,7 +315,7 @@ app.post("/cashcord/vergelijk", async (req, res) => {
       ondernemingsnummer1,
       ondernemingsnummer2,
       status: {
-        color: "#ff0f0f",
+        color: "#cc3300",
         message: "Ongeldige ondernemingsnummer(s)",
       },
       loggedIn: true,
@@ -305,14 +327,27 @@ app.post("/cashcord/vergelijk", async (req, res) => {
   const references1 = await getReferences(ondernemingsnummer1);
   const references2 = await getReferences(ondernemingsnummer2);
 
-  if (references1 === 404 || references1 === 400 || references2 === 404 || references2 === 400) {
+  if (references1 === 404 || references1 === 400) {
     return res.render("vergelijk", {
       path: req.path,
       ondernemingsnummer1,
       ondernemingsnummer2,
       status: {
-        color: "#ff0f0f",
-        message: "Ondernemingsnummer(s) werd niet gevonden door de Balanscentrale.",
+        color: "#cc3300",
+        message: `Geen neerleggingen gevonden voor onderneming met number ${ondernemingsnummer1}.`,
+      },
+      loggedIn: true,
+      user: req.session.user,
+      userHistory: userHistory.Comparison.reverse(),
+    });
+  } else if (references2 === 404 || references2 === 400) {
+    return res.render("vergelijk", {
+      path: req.path,
+      ondernemingsnummer1,
+      ondernemingsnummer2,
+      status: {
+        color: "#cc3300",
+        message: `Geen neerleggingen gevonden voor onderneming met nummer ${ondernemingsnummer2}.`,
       },
       loggedIn: true,
       user: req.session.user,
@@ -330,7 +365,7 @@ app.post("/cashcord/vergelijk", async (req, res) => {
         ondernemingsnummer1,
         ondernemingsnummer2,
         status: {
-          color: "#ff0f0f",
+          color: "#cc3300",
           message: "Ongeldige referte(s)",
         },
         loggedIn: true,
@@ -462,7 +497,7 @@ app.post("/cashcord/vergelijk", async (req, res) => {
         references2,
       },
       status: {
-        color: "#198754",
+        color: "#99cc33",
         message: "Selecteer het jaar van neerlegging",
       },
       loggedIn: true,

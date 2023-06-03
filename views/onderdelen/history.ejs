@@ -10,6 +10,7 @@
   <div>
     <p><%= reference1.EnterpriseName %></p>
     <div class="hidden">
+      <p>(<%= reference1.EnterpriseNumber %>)</p>
       <% if (reference1.AccountingData) { %>
       <table>
         <tr>
@@ -54,6 +55,7 @@
   <div>
     <p><%= reference2.EnterpriseName %></p>
     <div class="hidden">
+      <p>(<%= reference2.EnterpriseNumber %>)</p>
       <% if (reference2.AccountingData) { %>
       <table>
         <tr>
